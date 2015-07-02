@@ -17,8 +17,8 @@
 
 #pragma mark Initialization
 
-+ (instancetype)reflect:(id)object {
-    return [[self alloc] initWithValue:object];
++ (instancetype)reflect:(id)objectOrClass {
+    return [[self alloc] initWithValue:objectOrClass];
 }
 
 - (id)initWithValue:(id)value {
@@ -34,16 +34,31 @@
 }
 
 - (void)examine {
-    unsigned int pcount;
-    objc_property_t *roproperties = class_copyPropertyList([self.value class], &pcount);
+    unsigned int pcount, mcount;
+    objc_property_t *objcproperties = class_copyPropertyList([self.value class], &pcount);
+    Method *objcmethods             = class_copyMethodList([self.value class], &mcount);
     
     _className = NSStringFromClass([self.value class]);
     
-    NSMutableArray *properties = [NSMutableArray new];
+    NSMutableArray *properties = [NSMutableArray array];
     for (int i = 0; i < pcount; i++)
-        [properties addObject:[MKProperty property:roproperties[i]]];
-    
+        [properties addObject:[MKProperty property:objcproperties[i]]];
     _properties = properties;
+    
+    NSMutableArray *methods = [NSMutableArray array];
+    for (int i = 0; i < mcount; i++)
+        [methods addObject:[MKMethod method:objcmethods[i]]];
+    _methods = methods;
+    
+    // Cleanup
+    free(objcproperties);
+    free(objcmethods);
+}
+
+#pragma mark Misc
+
+- (MKMirror *)superReflection {
+    return [MKMirror reflect:[self.value superclass]];
 }
 
 @end

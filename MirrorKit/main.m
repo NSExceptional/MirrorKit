@@ -28,6 +28,12 @@ int main(int argc, const char * argv[]) {
         MKMirror *rootmirror  = [MKMirror reflect:ro];
         MKMirror *childmirror = [MKMirror reflect:c];
         MKMirror *arraymirror = [MKMirror reflect:thing];
+        MKMirror *classmirror = [MKMirror reflect:c.class];
+        
+        MKMirror *supermirror = classmirror.superReflection;
+        
+        MKMethod *method = rootmirror.methods[0];
+        [method getReturnValue:NULL forMessageSend:ro];
         
         
         while (true) { [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]]; }

@@ -10,12 +10,16 @@
 
 @interface MKMirror : NSObject
 
-+ (instancetype)reflect:(id)object;
++ (instancetype)reflect:(id)objectOrClass;
 
-/** The underlying object used to create this MKMirror. */
-@property (nonatomic, readonly) id value;
+/** The underlying object or class used to create this MKMirror. */
+@property (nonatomic, readonly) id       value;
 @property (nonatomic, readonly) NSString *className;
-@property (nonatomic) NSArray *properties;
+@property (nonatomic, readonly) NSArray  *properties;
+@property (nonatomic, readonly) NSArray  *methods;
+
+/** Returns a reflection of @c value.superClass. */
+@property (nonatomic, readonly) MKMirror *superReflection;
 
 
 @end

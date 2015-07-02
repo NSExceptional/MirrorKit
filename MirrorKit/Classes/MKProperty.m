@@ -35,13 +35,13 @@
 }
 
 - (void)examine {
-    NSString *attributesString = [NSString stringWithCString:property_getAttributes(_objc_property) encoding:NSUTF8StringEncoding];
+    NSString *attributesString = @(property_getAttributes(_objc_property));
     if (!attributesString) [NSException raise:NSInternalInconsistencyException format:@"Error retrieving property attributes"];
     
     NSDictionary *attributes = attributesString.propertyAttributes;
     
     _attributes         = attributesString;
-    _name               = [NSString stringWithCString:property_getName(_objc_property) encoding:NSUTF8StringEncoding];
+    _name               = @(property_getName(_objc_property));
     _typeEncoding       = attributes[MKPropertyAttributeKeyTypeEncoding];
     _type               = (MKPropertyType)[_typeEncoding characterAtIndex:0];
     _backingIVar        = attributes[MKPropertyAttributeKeyBackingIVarName];
