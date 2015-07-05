@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <objc/objc-runtime.h>
+@import ObjectiveC;
 
 #import "MirrorKit.h"
 #import "TestRoot.h"
@@ -22,19 +22,28 @@ int main(int argc, const char * argv[]) {
         
         TestRoot *ro = [TestRoot new];
         TestChild *c = [TestChild new];
-        
-        id thing = [NSArray alloc];
-        
         MKMirror *rootmirror  = [MKMirror reflect:ro];
         MKMirror *childmirror = [MKMirror reflect:c];
-        MKMirror *arraymirror = [MKMirror reflect:thing];
-        MKMirror *classmirror = [MKMirror reflect:c.class];
         
-        MKMirror *supermirror = classmirror.superReflection;
+        // Test foo before replacement
+        [ro rootFoo];
         
-        MKMethod *method = rootmirror.methods[0];
-        [method getReturnValue:NULL forMessageSend:ro];
+        MKMethod *oldFoo, *newFoo;
+        for (MKMethod *m in rootmirror.methods) {
+            if ([m.selectorString isEqualToString:@"rootFoo"])
+                oldFoo = m;
+            else if ([m.selectorString isEqualToString:@"rootBar"])
+                newFoo = m;
+        }
         
+        oldFoo.implementation = newFoo.implementation;
+        // Test foo after replacement
+        [ro rootFoo];
+        
+        TestRoot *rf = [TestRoot new];
+        [rf rootFoo];
+        
+        NSArray *arrays = [NSIndexSet allSubclasses];
         
         while (true) { [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]]; }
     }

@@ -10,13 +10,12 @@
 		B420277C1B42EA0E00982E40 /* NSObject+Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = B420277B1B42EA0E00982E40 /* NSObject+Reflection.m */; };
 		B420277F1B43D7D300982E40 /* MirrorKit-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = B420277E1B43D7D300982E40 /* MirrorKit-Constants.m */; };
 		B42027821B43DC7000982E40 /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B42027811B43DC7000982E40 /* NSString+Utilities.m */; };
+		B4C334AE1B4685C8007FA16A /* MKClassBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C334AD1B4685C8007FA16A /* MKClassBuilder.m */; };
+		B4C334B11B48DCD7007FA16A /* MKProtocolBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C334B01B48DCD7007FA16A /* MKProtocolBuilder.m */; };
 		B4C646771B425A1600B6A376 /* MKMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C646761B425A1600B6A376 /* MKMethod.m */; };
 		B4C6467A1B425A2400B6A376 /* MKIVar.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C646791B425A2400B6A376 /* MKIVar.m */; };
 		B4C6467D1B425A2E00B6A376 /* MKProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C6467C1B425A2E00B6A376 /* MKProperty.m */; };
 		B4C646801B425A3800B6A376 /* MKProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C6467F1B425A3800B6A376 /* MKProtocol.m */; };
-		B4C646831B425A5A00B6A376 /* MKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C646821B425A5A00B6A376 /* MKCategory.m */; };
-		B4C646861B425A6300B6A376 /* MKObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C646851B425A6300B6A376 /* MKObject.m */; };
-		B4C646891B425A9E00B6A376 /* MKClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C646881B425A9E00B6A376 /* MKClass.m */; };
 		B4D457DE1B4266ED00D60E27 /* TestRoot.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D457DD1B4266ED00D60E27 /* TestRoot.m */; };
 		B4D457E11B42670300D60E27 /* TestChild.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D457E01B42670300D60E27 /* TestChild.m */; };
 		B4D457E41B42672100D60E27 /* Test+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D457E31B42672100D60E27 /* Test+Categories.m */; };
@@ -43,6 +42,10 @@
 		B420277E1B43D7D300982E40 /* MirrorKit-Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MirrorKit-Constants.m"; sourceTree = "<group>"; };
 		B42027801B43DC7000982E40 /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Utilities.h"; path = "Categories/NSString+Utilities.h"; sourceTree = "<group>"; };
 		B42027811B43DC7000982E40 /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Utilities.m"; path = "Categories/NSString+Utilities.m"; sourceTree = "<group>"; };
+		B4C334AC1B4685C8007FA16A /* MKClassBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKClassBuilder.h; path = Classes/MKClassBuilder.h; sourceTree = "<group>"; };
+		B4C334AD1B4685C8007FA16A /* MKClassBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKClassBuilder.m; path = Classes/MKClassBuilder.m; sourceTree = "<group>"; };
+		B4C334AF1B48DCD7007FA16A /* MKProtocolBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKProtocolBuilder.h; path = Classes/MKProtocolBuilder.h; sourceTree = "<group>"; };
+		B4C334B01B48DCD7007FA16A /* MKProtocolBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKProtocolBuilder.m; path = Classes/MKProtocolBuilder.m; sourceTree = "<group>"; };
 		B4C646751B425A1600B6A376 /* MKMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKMethod.h; path = Classes/MKMethod.h; sourceTree = "<group>"; };
 		B4C646761B425A1600B6A376 /* MKMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKMethod.m; path = Classes/MKMethod.m; sourceTree = "<group>"; };
 		B4C646781B425A2400B6A376 /* MKIVar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKIVar.h; path = Classes/MKIVar.h; sourceTree = "<group>"; };
@@ -51,12 +54,6 @@
 		B4C6467C1B425A2E00B6A376 /* MKProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKProperty.m; path = Classes/MKProperty.m; sourceTree = "<group>"; };
 		B4C6467E1B425A3700B6A376 /* MKProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKProtocol.h; path = Classes/MKProtocol.h; sourceTree = "<group>"; };
 		B4C6467F1B425A3800B6A376 /* MKProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKProtocol.m; path = Classes/MKProtocol.m; sourceTree = "<group>"; };
-		B4C646811B425A5A00B6A376 /* MKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKCategory.h; path = Classes/MKCategory.h; sourceTree = "<group>"; };
-		B4C646821B425A5A00B6A376 /* MKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKCategory.m; path = Classes/MKCategory.m; sourceTree = "<group>"; };
-		B4C646841B425A6300B6A376 /* MKObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKObject.h; path = Classes/MKObject.h; sourceTree = "<group>"; };
-		B4C646851B425A6300B6A376 /* MKObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKObject.m; path = Classes/MKObject.m; sourceTree = "<group>"; };
-		B4C646871B425A9E00B6A376 /* MKClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKClass.h; path = Classes/MKClass.h; sourceTree = "<group>"; };
-		B4C646881B425A9E00B6A376 /* MKClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKClass.m; path = Classes/MKClass.m; sourceTree = "<group>"; };
 		B4D457DC1B4266ED00D60E27 /* TestRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestRoot.h; sourceTree = "<group>"; };
 		B4D457DD1B4266ED00D60E27 /* TestRoot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestRoot.m; sourceTree = "<group>"; };
 		B4D457DF1B42670300D60E27 /* TestChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestChild.h; sourceTree = "<group>"; };
@@ -124,20 +121,18 @@
 			children = (
 				B4EBB0241B42565400B8B398 /* MKMirror.h */,
 				B4EBB0251B42565400B8B398 /* MKMirror.m */,
-				B4C646811B425A5A00B6A376 /* MKCategory.h */,
-				B4C646821B425A5A00B6A376 /* MKCategory.m */,
-				B4C646871B425A9E00B6A376 /* MKClass.h */,
-				B4C646881B425A9E00B6A376 /* MKClass.m */,
+				B4C334AC1B4685C8007FA16A /* MKClassBuilder.h */,
+				B4C334AD1B4685C8007FA16A /* MKClassBuilder.m */,
 				B4C646781B425A2400B6A376 /* MKIVar.h */,
 				B4C646791B425A2400B6A376 /* MKIVar.m */,
 				B4C646751B425A1600B6A376 /* MKMethod.h */,
 				B4C646761B425A1600B6A376 /* MKMethod.m */,
-				B4C646841B425A6300B6A376 /* MKObject.h */,
-				B4C646851B425A6300B6A376 /* MKObject.m */,
 				B4C6467B1B425A2E00B6A376 /* MKProperty.h */,
 				B4C6467C1B425A2E00B6A376 /* MKProperty.m */,
 				B4C6467E1B425A3700B6A376 /* MKProtocol.h */,
 				B4C6467F1B425A3800B6A376 /* MKProtocol.m */,
+				B4C334AF1B48DCD7007FA16A /* MKProtocolBuilder.h */,
+				B4C334B01B48DCD7007FA16A /* MKProtocolBuilder.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -216,19 +211,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4C334AE1B4685C8007FA16A /* MKClassBuilder.m in Sources */,
 				B4C6467D1B425A2E00B6A376 /* MKProperty.m in Sources */,
 				B4C646771B425A1600B6A376 /* MKMethod.m in Sources */,
-				B4C646831B425A5A00B6A376 /* MKCategory.m in Sources */,
 				B4C6467A1B425A2400B6A376 /* MKIVar.m in Sources */,
-				B4C646861B425A6300B6A376 /* MKObject.m in Sources */,
 				B420277F1B43D7D300982E40 /* MirrorKit-Constants.m in Sources */,
 				B4C646801B425A3800B6A376 /* MKProtocol.m in Sources */,
 				B4EBB0261B42565400B8B398 /* MKMirror.m in Sources */,
 				B4D457DE1B4266ED00D60E27 /* TestRoot.m in Sources */,
+				B4C334B11B48DCD7007FA16A /* MKProtocolBuilder.m in Sources */,
 				B4D457E11B42670300D60E27 /* TestChild.m in Sources */,
 				B4D457E41B42672100D60E27 /* Test+Categories.m in Sources */,
 				B42027821B43DC7000982E40 /* NSString+Utilities.m in Sources */,
-				B4C646891B425A9E00B6A376 /* MKClass.m in Sources */,
 				B4EBB01E1B42560D00B8B398 /* main.m in Sources */,
 				B420277C1B42EA0E00982E40 /* NSObject+Reflection.m in Sources */,
 			);

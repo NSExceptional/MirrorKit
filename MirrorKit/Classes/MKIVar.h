@@ -7,8 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MKObject.h"
+#import "MirrorKit-Constants.h"
+@import ObjectiveC;
 
-@interface MKIVar : MKObject
+@interface MKIVar : NSObject
+
++ (instancetype)ivar:(Ivar)ivar;
+
+@property (nonatomic, readonly) Ivar           objc_ivar;
+
+@property (nonatomic, readonly) NSString       *name;
+@property (nonatomic, readonly) MKTypeEncoding type;
+@property (nonatomic, readonly) NSString       *typeEncoding;
+@property (nonatomic, readonly) NSInteger      offset;
 
 @end

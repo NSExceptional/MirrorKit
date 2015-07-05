@@ -12,8 +12,16 @@
 
 - (id)init { [NSException raise:NSInternalInconsistencyException format:@"Class instance should not be created with -init"]; return nil; }
 
+#pragma mark Initializers
+
 + (instancetype)method:(Method)method {
     return [[self alloc] initWithMethod:method];
+}
+
++ (instancetype)methodFrom:(Method)method withIMP:(IMP)implementation {
+    MKMethod *m = [[self alloc] initWithMethod:method];
+    m->_implementation = implementation;
+    return m;
 }
 
 - (id)initWithMethod:(Method)method {
@@ -34,11 +42,13 @@
 }
 
 - (void)examine {
-    _implementation  = method_getImplementation(self.objc_method);
-    _selector        = method_getName(self.objc_method);
-    _selectorString  = NSStringFromSelector(self.selector);
-    _signatureString = @(method_getTypeEncoding(self.objc_method));
-    _signature       = [NSMethodSignature signatureWithObjCTypes:self.signatureString.UTF8String];
+    _implementation    = method_getImplementation(self.objc_method);
+    _selector          = method_getName(self.objc_method);
+    _numberOfArguments = method_getNumberOfArguments(self.objc_method);
+    _selectorString    = NSStringFromSelector(self.selector);
+    _signatureString   = @(method_getTypeEncoding(self.objc_method));
+    _signature         = [NSMethodSignature signatureWithObjCTypes:self.signatureString.UTF8String];
+    _typeEncoding      = [_signatureString stringByReplacingOccurrencesOfString:@"[0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, _signatureString.length)];
 }
 
 #pragma mark Setters
@@ -46,10 +56,16 @@
 - (void)setImplementation:(IMP)implementation {
     NSParameterAssert(implementation);
     method_setImplementation(self.objc_method, implementation);
-    _implementation = implementation;
+    [self examine];
 }
 
-#pragma mark Message sending
+#pragma mark Misc
+
+- (void)swapImplementations:(MKMethod *)method {
+    method_exchangeImplementations(self.objc_method, method.objc_method);
+    [self examine];
+    [method examine];
+}
 
 // Code borrowed from MAObjcRuntime, by Mike Ash.
 - (id)sendMessage:(id)target, ... {

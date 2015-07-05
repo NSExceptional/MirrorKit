@@ -19,4 +19,4 @@ NSString * const MKPropertyAttributeKeyNonAtomic          = @"N";
 NSString * const MKPropertyAttributeKeyOldTypeEncoding    = @"t";
 NSString * const MKPropertyAttributeKeyReadOnly           = @"R";
 NSString * const MKPropertyAttributeKeyRetain             = @"&";
-NSString * const MKPropertyAttributeKeyWeak      = @"W";
+NSString * const MKPropertyAttributeKeyWeak               = @"W";

@@ -9,8 +9,6 @@
 #import "MKMirror.h"
 #import "MirrorKit.h"
 
-#import <objc/objc-runtime.h>
-
 @implementation MKMirror
 
 - (id)init { [NSException raise:NSInternalInconsistencyException format:@"Class instance should not be created with -init"]; return nil; }
@@ -33,10 +31,17 @@
     return self;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ class=%@, %lu properties, %lu ivars, %lu methods, %lu protocols>",
+            NSStringFromClass(self.class), self.className, self.properties.count, self.instanceVariables.count, self.methods.count, self.protocols.count];
+}
+
 - (void)examine {
-    unsigned int pcount, mcount;
-    objc_property_t *objcproperties = class_copyPropertyList([self.value class], &pcount);
-    Method *objcmethods             = class_copyMethodList([self.value class], &mcount);
+    unsigned int pcount, mcount, ivcount, pccount;
+    objc_property_t *objcproperties     = class_copyPropertyList([self.value class], &pcount);
+    Protocol*__unsafe_unretained *procs = class_copyProtocolList([self.value class], &pccount);
+    Method *objcmethods                 = class_copyMethodList([self.value class], &mcount);
+    Ivar *objcivars                     = class_copyIvarList([self.value class], &ivcount);
     
     _className = NSStringFromClass([self.value class]);
     
@@ -50,9 +55,22 @@
         [methods addObject:[MKMethod method:objcmethods[i]]];
     _methods = methods;
     
+    NSMutableArray *ivars = [NSMutableArray array];
+    for (int i = 0; i < ivcount; i++)
+        [ivars addObject:[MKIVar ivar:objcivars[i]]];
+    _instanceVariables = ivars;
+    
+    NSMutableArray *protocols = [NSMutableArray array];
+    for (int i = 0; i < pccount; i++)
+        [protocols addObject:[MKProtocol protocol:procs[i]]];
+    _protocols = protocols;
+    
     // Cleanup
     free(objcproperties);
     free(objcmethods);
+    free(objcivars);
+    free(procs);
+    procs = NULL;
 }
 
 #pragma mark Misc

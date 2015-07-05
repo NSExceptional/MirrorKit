@@ -15,13 +15,18 @@
     if (self) {
         _identifier = @"123abc";
         _timestamp = [[NSDate date] timeIntervalSince1970];
+        _obj = nil;
     }
     
     return self;
 }
 
-- (void)root_void {
-    NSLog(@"root_void");
+- (void)rootFoo {
+    NSLog(@"called rootFoo");
+}
+
+- (void)rootBar {
+    NSLog(@"called rootBar");
 }
 
 - (NSInteger)root_integer {
