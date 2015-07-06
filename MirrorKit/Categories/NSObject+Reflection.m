@@ -74,7 +74,7 @@
 
 @implementation NSObject (Methods)
 
-- (BOOL)addMethod:(SEL)selector implementation:(IMP)implementaiton typeEncoding:(NSString *)typeEncoding {
+- (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton {
     return class_addMethod(self.class, selector, implementaiton, typeEncoding.UTF8String);
 }
 

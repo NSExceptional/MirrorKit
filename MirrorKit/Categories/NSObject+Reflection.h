@@ -32,7 +32,7 @@
 @interface NSObject (Methods)
 
 /** @return YES if the method was added successfully, \c NO otherwise. */
-- (BOOL)addMethod:(SEL)selector implementation:(IMP)implementaiton typeEncoding:(NSString *)typeEncoding;
+- (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton;
 /** Not sure, but probably safe to make sure the given \c IMP takes the same parameters as the given method. */
 - (void)replaceImplementationOfMethod:(MKMethod *)method with:(IMP)implementation;
 - (void)swizzle:(MKMethod *)original with:(MKMethod *)other;

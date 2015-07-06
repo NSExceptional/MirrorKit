@@ -25,6 +25,8 @@ int main(int argc, const char * argv[]) {
         MKMirror *rootmirror  = [MKMirror reflect:ro];
         MKMirror *childmirror = [MKMirror reflect:c];
         
+        // Replace a method //
+        
         // Test foo before replacement
         [ro rootFoo];
         
@@ -49,19 +51,22 @@ int main(int argc, const char * argv[]) {
         [rf rootFoo];
         
         
-        // Add an entirely new method
-        // Do not include _cmd in the block arguments list
-        IMP printFooBarImp = imp_implementationWithBlock(^(id self, NSString *s, NSUInteger i) {
-            NSLog(@"Called printFoo:bar: %@ : %lu", s, i);
-            return [s capitalizedString];
-        });
+        // Add an entirely new method //
+        
         // Type encoding string [return type][self][_cmd][first param][second param]
         NSString *types = [NSString stringWithFormat:@"%s%s%s%s%s", @encode(id), @encode(id), @encode(SEL), @encode(id), @encode(NSUInteger)];
         // Make the selector
         SEL printfoobar = sel_registerName("printFoo:bar:");
-        BOOL didAddMethod = [ro addMethod:printfoobar implementation:printFooBarImp typeEncoding:types];
+        // Actually add the method; do not include _cmd in the block's arguments list
+        BOOL didAddMethod = [ro addMethod:printfoobar typeEncoding:types implementation:imp_implementationWithBlock(^(id self, NSString *s, NSUInteger i) {
+            NSLog(@"Called printFoo:bar: %@ : %lu", s, i);
+            return [s capitalizedString];
+        })];
+        
+        // Get MKMethod object via selector and class
         MKMethod *newMethod = [MKMethod methodForSelector:printfoobar class:ro.class];
         
+        // Call method and view return value
         NSString *ret;
         [newMethod getReturnValue:&ret forMessageSend:ro, MKArg(@"hi there"), MKArg((NSUInteger)0xdeadbee5)];
         NSLog(@"Method returned with result: %@", ret);
