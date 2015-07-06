@@ -9,7 +9,6 @@
 #import "NSObject+Reflection.h"
 
 #import "MKMirror.h"
-#import "MKCategory.h"
 #import "MKIVar.h"
 #import "MKMethod.h"
 #import "MKProperty.h"

@@ -18,10 +18,10 @@
     return [[self alloc] initWithMethod:method];
 }
 
-+ (instancetype)methodFrom:(Method)method withIMP:(IMP)implementation {
-    MKMethod *m = [[self alloc] initWithMethod:method];
-    m->_implementation = implementation;
-    return m;
++ (instancetype)methodForSelector:(SEL)selector class:(Class)cls {
+    Method m = class_getInstanceMethod([cls class], selector);
+    if (m == NULL) return nil;
+    return [self method:m];
 }
 
 - (id)initWithMethod:(Method)method {
@@ -99,6 +99,11 @@
     invocation.selector = self.selector;
     
     for(NSUInteger i = 2; i < argumentCount; i++) {
+        int cookie = va_arg(args, int);
+        if(cookie != MKMagicNumber) {
+            NSLog(@"%s: incorrect magic cookie %08x; make sure you didn\'t forget any arguments and that all arguments are wrapped in MKArg().", __func__, cookie);
+            abort();
+        }
         const char *typeString = va_arg(args, char *);
         void *argPointer       = va_arg(args, void *);
         

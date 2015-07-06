@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>792D25F6-AB00-4C9E-931F-97FA96454439</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>MirrorKit</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>DE7B06A8C770530C1E22D6307E80C30E17754975</key>
 		<string>https://github.com/ThePantsThief/MirrorKit.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>MirrorKit.xcodeproj/project.xcworkspace</string>
+	<string>MirrorKit.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>DE7B06A8C770530C1E22D6307E80C30E17754975</key>

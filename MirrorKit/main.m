@@ -28,6 +28,7 @@ int main(int argc, const char * argv[]) {
         // Test foo before replacement
         [ro rootFoo];
         
+        // Find some methods
         MKMethod *oldFoo, *newFoo;
         for (MKMethod *m in rootmirror.methods) {
             if ([m.selectorString isEqualToString:@"rootFoo"])
@@ -36,14 +37,34 @@ int main(int argc, const char * argv[]) {
                 newFoo = m;
         }
         
-        oldFoo.implementation = newFoo.implementation;
+        // Replace one
+        IMP fooimp = imp_implementationWithBlock(^(id self, SEL _cmd) {
+            NSLog(@"New foo, id: %@", [self identifier]);
+        });
+        oldFoo.implementation = fooimp;
         // Test foo after replacement
         [ro rootFoo];
-        
+        // Replaced across all instances of the class
         TestRoot *rf = [TestRoot new];
         [rf rootFoo];
         
-        NSArray *arrays = [NSIndexSet allSubclasses];
+        
+        // Add an entirely new method
+        // Do not include _cmd in the block arguments list
+        IMP printFooBarImp = imp_implementationWithBlock(^(id self, NSString *s, NSUInteger i) {
+            NSLog(@"Called printFoo:bar: %@ : %lu", s, i);
+            return [s capitalizedString];
+        });
+        // Type encoding string [return type][self][_cmd][first param][second param]
+        NSString *types = [NSString stringWithFormat:@"%s%s%s%s%s", @encode(id), @encode(id), @encode(SEL), @encode(id), @encode(NSUInteger)];
+        // Make the selector
+        SEL printfoobar = sel_registerName("printFoo:bar:");
+        BOOL didAddMethod = [ro addMethod:printfoobar implementation:printFooBarImp typeEncoding:types];
+        MKMethod *newMethod = [MKMethod methodForSelector:printfoobar class:ro.class];
+        
+        NSString *ret;
+        [newMethod getReturnValue:&ret forMessageSend:ro, MKArg(@"hi there"), MKArg((NSUInteger)0xdeadbee5)];
+        NSLog(@"Method returned with result: %@", ret);
         
         while (true) { [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]]; }
     }

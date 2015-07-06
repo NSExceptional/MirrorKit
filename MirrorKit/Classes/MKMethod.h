@@ -12,6 +12,7 @@
 @interface MKMethod : NSObject
 
 + (instancetype)method:(Method)method;
++ (instancetype)methodForSelector:(SEL)selector class:(Class)cls;
 
 @property (nonatomic, readonly) Method            objc_method;
 /** Setting \c implementation will change the implementation of this method for the entire class which implements said method. It will also not modify the selector of said method. */
@@ -26,6 +27,8 @@
 
 - (void)swapImplementations:(MKMethod *)method;
 
+#define MKMagicNumber 0xdeadbeef
+#define MKArg(expr) MKMagicNumber, @encode(__typeof__(expr)), (__typeof__(expr) []){ expr }
 /** Throws an exception if the method returns anything but \c id. */
 - (id)sendMessage:(id)target, ...;
 /** Used for other return types. Pass \c NULL to the first parameter for void methods. */
