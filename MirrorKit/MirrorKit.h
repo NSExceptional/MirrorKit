@@ -11,5 +11,10 @@
 #import "MKMirror.h"
 #import "MKIVar.h"
 #import "MKMethod.h"
-#import "MKProperty.h"
 #import "MKProtocol.h"
+#import "MKProperty.h"
+#import "MKPropertyAttributes.h"
+
+#import "MKClassBuilder.h"
+#import "MKSimpleMethod.h"
+#import "MKProtocolBuilder.h"

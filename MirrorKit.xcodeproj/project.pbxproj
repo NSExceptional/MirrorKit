@@ -10,6 +10,9 @@
 		B420277C1B42EA0E00982E40 /* NSObject+Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = B420277B1B42EA0E00982E40 /* NSObject+Reflection.m */; };
 		B420277F1B43D7D300982E40 /* MirrorKit-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = B420277E1B43D7D300982E40 /* MirrorKit-Constants.m */; };
 		B42027821B43DC7000982E40 /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B42027811B43DC7000982E40 /* NSString+Utilities.m */; };
+		B454407B1B4A263400B1A214 /* MKSimpleMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B454407A1B4A263400B1A214 /* MKSimpleMethod.m */; };
+		B454407E1B4A2C6E00B1A214 /* MKPropertyAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = B454407D1B4A2C6E00B1A214 /* MKPropertyAttributes.m */; };
+		B45440811B4A37C100B1A214 /* NSDictionary+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B45440801B4A37C100B1A214 /* NSDictionary+Utilities.m */; };
 		B4C334AE1B4685C8007FA16A /* MKClassBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C334AD1B4685C8007FA16A /* MKClassBuilder.m */; };
 		B4C334B11B48DCD7007FA16A /* MKProtocolBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C334B01B48DCD7007FA16A /* MKProtocolBuilder.m */; };
 		B4C646771B425A1600B6A376 /* MKMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C646761B425A1600B6A376 /* MKMethod.m */; };
@@ -42,6 +45,12 @@
 		B420277E1B43D7D300982E40 /* MirrorKit-Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MirrorKit-Constants.m"; sourceTree = "<group>"; };
 		B42027801B43DC7000982E40 /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Utilities.h"; path = "Categories/NSString+Utilities.h"; sourceTree = "<group>"; };
 		B42027811B43DC7000982E40 /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Utilities.m"; path = "Categories/NSString+Utilities.m"; sourceTree = "<group>"; };
+		B45440791B4A263400B1A214 /* MKSimpleMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKSimpleMethod.h; path = Classes/MKSimpleMethod.h; sourceTree = "<group>"; };
+		B454407A1B4A263400B1A214 /* MKSimpleMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKSimpleMethod.m; path = Classes/MKSimpleMethod.m; sourceTree = "<group>"; };
+		B454407C1B4A2C6E00B1A214 /* MKPropertyAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKPropertyAttributes.h; path = Classes/MKPropertyAttributes.h; sourceTree = "<group>"; };
+		B454407D1B4A2C6E00B1A214 /* MKPropertyAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKPropertyAttributes.m; path = Classes/MKPropertyAttributes.m; sourceTree = "<group>"; };
+		B454407F1B4A37C100B1A214 /* NSDictionary+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+Utilities.h"; path = "Categories/NSDictionary+Utilities.h"; sourceTree = "<group>"; };
+		B45440801B4A37C100B1A214 /* NSDictionary+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+Utilities.m"; path = "Categories/NSDictionary+Utilities.m"; sourceTree = "<group>"; };
 		B4C334AC1B4685C8007FA16A /* MKClassBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKClassBuilder.h; path = Classes/MKClassBuilder.h; sourceTree = "<group>"; };
 		B4C334AD1B4685C8007FA16A /* MKClassBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKClassBuilder.m; path = Classes/MKClassBuilder.m; sourceTree = "<group>"; };
 		B4C334AF1B48DCD7007FA16A /* MKProtocolBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKProtocolBuilder.h; path = Classes/MKProtocolBuilder.h; sourceTree = "<group>"; };
@@ -129,10 +138,14 @@
 				B4C646761B425A1600B6A376 /* MKMethod.m */,
 				B4C6467B1B425A2E00B6A376 /* MKProperty.h */,
 				B4C6467C1B425A2E00B6A376 /* MKProperty.m */,
+				B454407C1B4A2C6E00B1A214 /* MKPropertyAttributes.h */,
+				B454407D1B4A2C6E00B1A214 /* MKPropertyAttributes.m */,
 				B4C6467E1B425A3700B6A376 /* MKProtocol.h */,
 				B4C6467F1B425A3800B6A376 /* MKProtocol.m */,
 				B4C334AF1B48DCD7007FA16A /* MKProtocolBuilder.h */,
 				B4C334B01B48DCD7007FA16A /* MKProtocolBuilder.m */,
+				B45440791B4A263400B1A214 /* MKSimpleMethod.h */,
+				B454407A1B4A263400B1A214 /* MKSimpleMethod.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -144,6 +157,8 @@
 				B420277B1B42EA0E00982E40 /* NSObject+Reflection.m */,
 				B42027801B43DC7000982E40 /* NSString+Utilities.h */,
 				B42027811B43DC7000982E40 /* NSString+Utilities.m */,
+				B454407F1B4A37C100B1A214 /* NSDictionary+Utilities.h */,
+				B45440801B4A37C100B1A214 /* NSDictionary+Utilities.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -216,6 +231,7 @@
 				B4C646771B425A1600B6A376 /* MKMethod.m in Sources */,
 				B4C6467A1B425A2400B6A376 /* MKIVar.m in Sources */,
 				B420277F1B43D7D300982E40 /* MirrorKit-Constants.m in Sources */,
+				B454407E1B4A2C6E00B1A214 /* MKPropertyAttributes.m in Sources */,
 				B4C646801B425A3800B6A376 /* MKProtocol.m in Sources */,
 				B4EBB0261B42565400B8B398 /* MKMirror.m in Sources */,
 				B4D457DE1B4266ED00D60E27 /* TestRoot.m in Sources */,
@@ -223,8 +239,10 @@
 				B4D457E11B42670300D60E27 /* TestChild.m in Sources */,
 				B4D457E41B42672100D60E27 /* Test+Categories.m in Sources */,
 				B42027821B43DC7000982E40 /* NSString+Utilities.m in Sources */,
+				B45440811B4A37C100B1A214 /* NSDictionary+Utilities.m in Sources */,
 				B4EBB01E1B42560D00B8B398 /* main.m in Sources */,
 				B420277C1B42EA0E00982E40 /* NSObject+Reflection.m in Sources */,
+				B454407B1B4A263400B1A214 /* MKSimpleMethod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

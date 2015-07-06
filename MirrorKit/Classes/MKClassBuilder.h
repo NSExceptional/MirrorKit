@@ -20,7 +20,7 @@
 /** Use this to modify existing classes. @warning You cannot add instance variables to existing classes. */
 + (instancetype)builderForClass:(Class)cls;
 
-/** @param methods An array of \c MKMethod objects. @return Any methods that failed to be added. */
+/** @param methods An array of \c MKSimpleMethod objects. @return Any methods that failed to be added. */
 - (NSArray *)addMethods:(NSArray *)methods;
 /** @param methods An array of \c MKProperty objects. @return Any properties that failed to be added. */
 - (NSArray *)addProperties:(NSArray *)properties;

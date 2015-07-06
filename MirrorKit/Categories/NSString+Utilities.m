@@ -18,6 +18,8 @@
 }
 
 - (NSDictionary *)propertyAttributes {
+    if (!self.length) return nil;
+    
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     
     NSArray *components = [self componentsSeparatedByString:@","];
@@ -61,7 +63,8 @@
                 attributes[MKPropertyAttributeKeyWeak] = @YES;
                 break;
             default:
-                [NSException raise:NSInternalInconsistencyException format:@"Unsupported property attribute: %c", (char)c];
+                return nil;
+                //[NSException raise:NSInternalInconsistencyException format:@"Unsupported property attribute: %c", (char)c];
                 break;
         }
     }

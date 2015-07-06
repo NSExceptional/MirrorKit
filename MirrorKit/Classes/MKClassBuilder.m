@@ -6,12 +6,11 @@
 //  Copyright (c) 2015 Tanner Bennett. All rights reserved.
 //
 
-#import "MKClassBuilder.h"
 #import "MirrorKit.h"
 #import "NSString+Utilities.h"
 @import ObjectiveC;
 
-#pragma mark - MKClassBuilder-
+#pragma mark - MKClassBuilder -
 
 @interface MKClassBuilder ()
 @property (nonatomic) Class workingClass;
@@ -62,7 +61,7 @@
     NSParameterAssert(methods.count);
     
     NSMutableArray *failed = [NSMutableArray array];
-    for (MKMethod *m in methods)
+    for (MKSimpleMethod *m in methods)
         if (!class_addMethod(self.workingClass, m.selector, m.implementation, m.typeEncoding.UTF8String))
             [failed addObject:m];
     

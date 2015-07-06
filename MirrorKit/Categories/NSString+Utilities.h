@@ -12,6 +12,7 @@
 
 - (NSString *)stringbyDeletingCharacterAtIndex:(NSUInteger)idx;
 
+/** See this link on how to construct a proper attributes string: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html */
 - (NSDictionary *)propertyAttributes;
 
 @end

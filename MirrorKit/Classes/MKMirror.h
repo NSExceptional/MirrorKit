@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class MKMethod, MKProperty, MKIVar;
+@class MKMethod, MKProperty, MKIVar, MKProtocol;
 @import ObjectiveC;
 
 
@@ -26,5 +26,15 @@
 
 /** Returns a reflection of \c value.superClass. */
 @property (nonatomic, readonly) MKMirror *superMirror;
+
+@end
+
+
+@interface MKMirror (ExtendedMirror)
+
+- (MKMethod *)methodNamed:(NSString *)name;
+- (MKProperty *)propertyNamed:(NSString *)name;
+- (MKIVar *)ivarNamed:(NSString *)name;
+- (MKProtocol *)protocolNamed:(NSString *)name;
 
 @end

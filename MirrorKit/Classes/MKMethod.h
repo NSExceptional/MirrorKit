@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MKSimpleMethod.h"
 @import ObjectiveC;
 
-@interface MKMethod : NSObject
+@interface MKMethod : MKSimpleMethod
 
 + (instancetype)method:(Method)method;
 + (instancetype)methodForSelector:(SEL)selector class:(Class)cls;
@@ -17,13 +18,11 @@
 @property (nonatomic, readonly) Method            objc_method;
 /** Setting \c implementation will change the implementation of this method for the entire class which implements said method. It will also not modify the selector of said method. */
 @property (nonatomic          ) IMP               implementation;
-@property (nonatomic, readonly) SEL               selector;
 @property (nonatomic, readonly) NSUInteger        numberOfArguments;
 @property (nonatomic, readonly) NSString          *selectorString;
 @property (nonatomic, readonly) NSMethodSignature *signature;
+/** Same as \e typeEncoding but with parameter sizes up front and offsets after the types. */
 @property (nonatomic, readonly) NSString          *signatureString;
-/** Same as \c signatureString but without the parameter sizes and offsets. */
-@property (nonatomic, readonly) NSString          *typeEncoding;
 
 - (void)swapImplementations:(MKMethod *)method;
 

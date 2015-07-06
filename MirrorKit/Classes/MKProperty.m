@@ -7,6 +7,7 @@
 //
 
 #import "MKProperty.h"
+#import "MKPropertyAttributes.h"
 #import "NSString+Utilities.h"
 
 @implementation MKProperty
@@ -17,7 +18,11 @@
     return [[self alloc] initWithProperty:property];
 }
 
-+ (instancetype)propertyWithName:(NSString *)name attributes:(NSString *)attributes {
++ (instancetype)propertyWithName:(NSString *)name attributesString:(NSString *)attributesString {
+    return [self propertyWithName:name attributes:[MKPropertyAttributes attributesFromString:attributesString]];
+}
+
++ (instancetype)propertyWithName:(NSString *)name attributes:(MKPropertyAttributes *)attributes {
     return [[self alloc] initWithName:name attributes:attributes];
 }
 
@@ -27,7 +32,7 @@
     self = [super init];
     if (self) {
         _objc_property = property;
-        _attributes    = @(property_getAttributes(self.objc_property));
+        _attributes    = [MKPropertyAttributes attributesFromString:@(property_getAttributes(self.objc_property))];
         _name          = @(property_getName(self.objc_property));
         
         if (!_attributes) [NSException raise:NSInternalInconsistencyException format:@"Error retrieving property attributes"];
@@ -39,7 +44,7 @@
     return self;
 }
 
-- (id)initWithName:(NSString *)name attributes:(NSString *)attributes {
+- (id)initWithName:(NSString *)name attributes:(MKPropertyAttributes *)attributes {
     NSParameterAssert(name); NSParameterAssert(attributes);
     
     self = [super init];
@@ -53,34 +58,21 @@
     return self;
 }
 
-- (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ name=%@, ivar=%@, readonly=%hhd, nonatomic=%hhd, getter=%@, setter=%@>",
-            NSStringFromClass(self.class), self.name, self.backingIVar?:@"none", self.readOnly, self.nonatomic, NSStringFromSelector(self.customGetter)?:@" ", NSStringFromSelector(self.customSetter)?:@" "];
+- (void)examine {
+    _type = (MKTypeEncoding)[self.attributes.typeEncoding characterAtIndex:0];
 }
 
-- (void)examine {
-    NSDictionary *attributes = self.attributes.propertyAttributes;
-    
-    _attributeCount     = attributes.allKeys.count;
-    _typeEncoding       = attributes[MKPropertyAttributeKeyTypeEncoding];
-    _type               = (MKTypeEncoding)[_typeEncoding characterAtIndex:0];
-    _backingIVar        = attributes[MKPropertyAttributeKeyBackingIVarName];
-    _oldTypeEncoding    = attributes[MKPropertyAttributeKeyOldTypeEncoding];
-    _customGetter       = NSSelectorFromString(attributes[MKPropertyAttributeKeyCustomGetter]);
-    _customSetter       = NSSelectorFromString(attributes[MKPropertyAttributeKeyCustomSetter]);
-    _readOnly           = [attributes[MKPropertyAttributeKeyReadOnly] boolValue];
-    _copy               = [attributes[MKPropertyAttributeKeyCopy] boolValue];
-    _retain             = [attributes[MKPropertyAttributeKeyRetain] boolValue];
-    _nonatomic          = [attributes[MKPropertyAttributeKeyNonAtomic] boolValue];
-    _weak               = [attributes[MKPropertyAttributeKeyWeak] boolValue];
-    _garbageCollectable = [attributes[MKPropertyAttributeKeyGarbageCollectible] boolValue];
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ name=%@, >\nAttributes:\n\t%@",
+            NSStringFromClass(self.class), self.name, self.attributes];
 }
 
 - (objc_property_attribute_t *)copyAttributesList:(unsigned int *)attributesCount {
     if (self.objc_property) {
         return property_copyAttributeList(self.objc_property, attributesCount);
     } else {
-        NSDictionary *attributes = self.attributes.propertyAttributes;
+        MKPropertyAttributes *pattrs = self.attributes;
+        NSDictionary *attributes = pattrs.attributesString.propertyAttributes;
         *attributesCount = (unsigned int)attributes.allKeys.count;
         objc_property_attribute_t *propertyAttributes = malloc(attributes.allKeys.count*sizeof(objc_property_attribute_t));
         
@@ -89,12 +81,12 @@
             MKPropertyAttribute c = (MKPropertyAttribute)[key characterAtIndex:0];
             switch (c) {
                 case MKPropertyAttributeTypeEncoding: {
-                    objc_property_attribute_t pa = {MKPropertyAttributeKeyTypeEncoding.UTF8String, self.typeEncoding.UTF8String};
+                    objc_property_attribute_t pa = {MKPropertyAttributeKeyTypeEncoding.UTF8String, pattrs.typeEncoding.UTF8String};
                     propertyAttributes[i] = pa;
                     break;
                 }
                 case MKPropertyAttributeBackingIVarName: {
-                    objc_property_attribute_t pa = {MKPropertyAttributeKeyBackingIVarName.UTF8String, self.backingIVar.UTF8String};
+                    objc_property_attribute_t pa = {MKPropertyAttributeKeyBackingIVarName.UTF8String, pattrs.backingIVar.UTF8String};
                     propertyAttributes[i] = pa;
                     break;
                 }
@@ -104,12 +96,12 @@
                     break;
                 }
                 case MKPropertyAttributeCustomGetter: {
-                    objc_property_attribute_t pa = {MKPropertyAttributeKeyCustomGetter.UTF8String, NSStringFromSelector(self.customGetter).UTF8String ?: ""};
+                    objc_property_attribute_t pa = {MKPropertyAttributeKeyCustomGetter.UTF8String, NSStringFromSelector(pattrs.customGetter).UTF8String ?: ""};
                     propertyAttributes[i] = pa;
                     break;
                 }
                 case MKPropertyAttributeCustomSetter: {
-                    objc_property_attribute_t pa = {MKPropertyAttributeKeyCustomSetter.UTF8String, NSStringFromSelector(self.customSetter).UTF8String ?: ""};
+                    objc_property_attribute_t pa = {MKPropertyAttributeKeyCustomSetter.UTF8String, NSStringFromSelector(pattrs.customSetter).UTF8String ?: ""};
                     propertyAttributes[i] = pa;
                     break;
                 }
@@ -129,7 +121,7 @@
                     break;
                 }
                 case MKPropertyAttributeOldTypeEncoding: {
-                    objc_property_attribute_t pa = {MKPropertyAttributeKeyOldTypeEncoding.UTF8String, self.oldTypeEncoding.UTF8String ?: ""};
+                    objc_property_attribute_t pa = {MKPropertyAttributeKeyOldTypeEncoding.UTF8String, pattrs.oldTypeEncoding.UTF8String ?: ""};
                     propertyAttributes[i] = pa;
                     break;
                 }

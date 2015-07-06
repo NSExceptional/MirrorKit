@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, MKPropertyAttribute)
     MKPropertyAttributeOldTypeEncoding    = 't',
     MKPropertyAttributeReadOnly           = 'R',
     MKPropertyAttributeRetain             = '&',
-    MKPropertyAttributeWeak      = 'W'
+    MKPropertyAttributeWeak               = 'W'
 };
 
 typedef NS_ENUM(NSUInteger, MKTypeEncoding)

@@ -9,12 +9,13 @@
 #import "MKMirror.h"
 #import "MirrorKit.h"
 
+#pragma mark - MKMirror -
+
 @implementation MKMirror
 
 - (id)init { [NSException raise:NSInternalInconsistencyException format:@"Class instance should not be created with -init"]; return nil; }
 
 #pragma mark Initialization
-
 + (instancetype)reflect:(id)objectOrClass {
     return [[self alloc] initWithValue:objectOrClass];
 }
@@ -74,9 +75,35 @@
 }
 
 #pragma mark Misc
-
 - (MKMirror *)superReflection {
     return [MKMirror reflect:[self.value superclass]];
+}
+
+@end
+
+
+#pragma mark - ExtendedMirror -
+
+@implementation MKMirror (ExtendedMirror)
+
+- (MKMethod *)methodNamed:(NSString *)name {
+    NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"selectorString", name];
+    return [self.methods filteredArrayUsingPredicate:filter][0];
+}
+
+- (MKProperty *)propertyNamed:(NSString *)name {
+    NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"name", name];
+    return [self.methods filteredArrayUsingPredicate:filter][0];
+}
+
+- (MKIVar *)ivarNamed:(NSString *)name {
+    NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"name", name];
+    return [self.methods filteredArrayUsingPredicate:filter][0];
+}
+
+- (MKProtocol *)protocolNamed:(NSString *)name {
+    NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"name", name];
+    return [self.methods filteredArrayUsingPredicate:filter][0];
 }
 
 @end

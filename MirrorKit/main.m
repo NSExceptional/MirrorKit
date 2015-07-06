@@ -71,6 +71,67 @@ int main(int argc, const char * argv[]) {
         [newMethod getReturnValue:&ret forMessageSend:ro, MKArg(@"hi there"), MKArg((NSUInteger)0xdeadbee5)];
         NSLog(@"Method returned with result: %@", ret);
         
+        
+        ////////////////////////////
+        // Create an entire class //
+        ////////////////////////////
+        
+        // Start here by naming it
+        MKClassBuilder *builder = [MKClassBuilder allocateClass:@"NSAtom"];
+        
+        // Create IVars...
+        MKIVarBuilder *iName = [MKIVarBuilder name:@"_name" size:sizeof(id) alignment:log2(sizeof(id)) typeEncoding:@(@encode(id))];
+        MKIVarBuilder *iLength = [MKIVarBuilder name:@"_length" size:sizeof(NSUInteger) alignment:log2(sizeof(NSUInteger)) typeEncoding:@(@encode(NSUInteger))];
+        
+        // Create some methods...
+        NSString *minitTypes = [NSString stringWithFormat:@"%s%s%s", @encode(id), @encode(id), @encode(SEL)];
+        NSString *mFooTypes = [NSString stringWithFormat:@"%s%s%s", @encode(void), @encode(id), @encode(SEL)];
+        NSString *mBarTypes = [NSString stringWithFormat:@"%s%s%s%s", @encode(void), @encode(id), @encode(SEL), @encode(id)];
+        MKSimpleMethod *minit = [MKSimpleMethod buildMethodNamed:@"init" withTypes:minitTypes implementation:imp_implementationWithBlock(^(id self) {
+            NSUInteger len = 6;
+            [self setIVarByName:iLength.name value:&len size:sizeof(len)];
+            [self setIVarByName:iName.name object:@"Tanner"];
+            NSLog(@"Called init");
+            return self;
+        })];
+        MKSimpleMethod *mFoo = [MKSimpleMethod buildMethodNamed:@"foo" withTypes:mFooTypes implementation:imp_implementationWithBlock(^(id self) {
+            NSLog(@"%s foooooooooo", __func__);
+        })];
+        MKSimpleMethod *mBar = [MKSimpleMethod buildMethodNamed:@"bar:" withTypes:mBarTypes implementation:imp_implementationWithBlock(^(id self, id anyobj) {
+            NSLog(@"%s barrrrrrr: %@", __func__, [anyobj description]);
+        })];
+
+        // Create some property attributes, then...
+        MKMutablePropertyAttributes *nameAttributes = [MKMutablePropertyAttributes attributes];
+        nameAttributes.isReadOnly = YES;
+        nameAttributes.backingIVar = iName.name;
+        [nameAttributes setTypeEncodingChar:MKTypeEncodingObjcObject];
+        NSDictionary *lengthAttributesDict = @{MKPropertyAttributeKeyNonAtomic:       @YES,
+                                               MKPropertyAttributeKeyTypeEncoding:    [NSString stringWithFormat:@"%c", (char)MKTypeEncodingUnsignedLongLong],
+                                               MKPropertyAttributeKeyBackingIVarName: iLength.name};
+        MKPropertyAttributes *lengthAttributes = [MKPropertyAttributes attributesFromDictionary:lengthAttributesDict];
+        
+        // Initialize some properties with those attributes...
+        MKProperty *pName = [MKProperty propertyWithName:@"name" attributes:nameAttributes];
+        MKProperty *pLength = [MKProperty propertyWithName:@"length" attributes:lengthAttributes];
+        
+        // Add the methods, IVars, and properties
+        [builder addMethods:@[minit, mFoo, mBar]];
+        [builder addIVars:@[iName, iLength]];
+        [builder addProperties:@[pName, pLength]];
+        
+        // Register the class and create an instance of it!
+        Class myClass = [builder registerClass];
+        id smallAtom = [myClass new];
+        
+        // Proof it all worked / how to work with a runtime-created class
+        MKMirror *atomReflection = [MKMirror reflect:smallAtom];
+        MKMethod *atomFoo = [atomReflection methodNamed:@"foo"];
+        MKMethod *atomBar = [atomReflection methodNamed:@"bar:"];
+        [atomFoo getReturnValue:NULL forMessageSend:smallAtom];
+        NSArray *obj = @[@"First string", @"Second string"];
+        [atomBar getReturnValue:NULL forMessageSend:smallAtom, MKArg(obj)];
+        
         while (true) { [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]]; }
     }
     
