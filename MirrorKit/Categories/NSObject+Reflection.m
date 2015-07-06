@@ -74,6 +74,18 @@
 
 @implementation NSObject (Methods)
 
++ (NSArray *)allMethods {
+    unsigned int mcount;
+    Method *objcmethods = class_copyMethodList([self class], &mcount);
+    
+    NSMutableArray *methods = [NSMutableArray array];
+    for (int i = 0; i < mcount; i++)
+        [methods addObject:[MKMethod method:objcmethods[i]]];
+
+    free(objcmethods);
+    return methods;
+}
+
 - (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton {
     return class_addMethod(self.class, selector, implementaiton, typeEncoding.UTF8String);
 }
@@ -113,6 +125,18 @@
 #pragma mark - IVars -
 
 @implementation NSObject (IVars)
+
++ (NSArray *)allIVars {
+    unsigned int ivcount;
+    Ivar *objcivars = class_copyIvarList([self class], &ivcount);
+    
+    NSMutableArray *ivars = [NSMutableArray array];
+    for (int i = 0; i < ivcount; i++)
+        [ivars addObject:[MKIVar ivar:objcivars[i]]];
+    
+    free(objcivars);
+    return ivars;
+}
 
 #pragma mark Get address
 - (void *)getIVarAddress:(MKIVar *)ivar {
@@ -172,6 +196,18 @@
 #pragma mark - Properties -
 
 @implementation NSObject (Properties)
+
++ (NSArray *)allProperties {
+    unsigned int pcount;
+    objc_property_t *objcproperties = class_copyPropertyList([self class], &pcount);
+    
+    NSMutableArray *properties = [NSMutableArray array];
+    for (int i = 0; i < pcount; i++)
+        [properties addObject:[MKProperty property:objcproperties[i]]];
+    
+    free(objcproperties);
+    return properties;
+}
 
 - (void)replaceProperty:(MKProperty *)property {
     unsigned int count;

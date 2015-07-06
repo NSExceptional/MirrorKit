@@ -8,12 +8,15 @@
 
 #import "MKProperty.h"
 #import "MKPropertyAttributes.h"
+#import "MKSimpleMethod.h"
 #import "NSString+Utilities.h"
+#import "NSObject+Reflection.h"
 
 @implementation MKProperty
 
 - (id)init { [NSException raise:NSInternalInconsistencyException format:@"Class instance should not be created with -init"]; return nil; }
 
+#pragma mark Initializers
 + (instancetype)property:(objc_property_t)property {
     return [[self alloc] initWithProperty:property];
 }
@@ -58,6 +61,7 @@
     return self;
 }
 
+#pragma mark Misc
 - (void)examine {
     _type = (MKTypeEncoding)[self.attributes.typeEncoding characterAtIndex:0];
 }
@@ -146,6 +150,21 @@
         
         return propertyAttributes;
     }
+}
+
+#pragma mark Suggested getters and setters
+- (MKSimpleMethod *)getterWithImplementation:(IMP)implementation {
+    NSString *types        = [NSString stringWithFormat:@"%@%s%s", self.attributes.typeEncoding, @encode(id), @encode(SEL)];
+    NSString *name         = [NSString stringWithFormat:@"%@", self.name];
+    MKSimpleMethod *getter = [MKSimpleMethod buildMethodNamed:name withTypes:types implementation:implementation];
+    return getter;
+}
+
+- (MKSimpleMethod *)setterWithImplementation:(IMP)implementation {
+    NSString *types        = [NSString stringWithFormat:@"%s%s%s%@", @encode(void), @encode(id), @encode(SEL), self.attributes.typeEncoding];
+    NSString *name         = [NSString stringWithFormat:@"set%@:", self.name.capitalizedString];
+    MKSimpleMethod *setter = [MKSimpleMethod buildMethodNamed:name withTypes:types implementation:implementation];
+    return setter;
 }
 
 @end

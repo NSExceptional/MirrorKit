@@ -31,6 +31,8 @@
 #pragma mark Methods
 @interface NSObject (Methods)
 
++ (NSArray *)allMethods;
+
 /** @return YES if the method was added successfully, \c NO otherwise. */
 - (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton;
 /** Not sure, but probably safe to make sure the given \c IMP takes the same parameters as the given method. */
@@ -45,6 +47,8 @@
 
 #pragma mark Properties
 @interface NSObject (IVars)
+
++ (NSArray *)allIVars;
 
 - (void *)getIVarAddress:(MKIVar *)ivar;
 /** @return \c NULL if the IVar could not be found. */
@@ -69,6 +73,8 @@
 
 #pragma mark Properties
 @interface NSObject (Properties)
+
++ (NSArray *)allProperties;
 
 - (void)replaceProperty:(MKProperty *)property;
 

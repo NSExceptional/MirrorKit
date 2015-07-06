@@ -13,7 +13,6 @@
 #pragma mark - MKClassBuilder -
 
 @interface MKClassBuilder ()
-@property (nonatomic) Class workingClass;
 @property (nonatomic) NSString *name;
 @end
 

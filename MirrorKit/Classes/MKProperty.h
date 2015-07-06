@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MirrorKit-Constants.h"
 @import ObjectiveC;
-@class MKPropertyAttributes;
+@class MKPropertyAttributes, MKSimpleMethod;
 
 
 @interface MKProperty : NSObject
@@ -27,5 +27,8 @@
 
 /** Safe to use regardless of how the \c MKProperty instance was initialized. */
 - (objc_property_attribute_t *)copyAttributesList:(unsigned int *)attributesCount;
+
+- (MKSimpleMethod *)getterWithImplementation:(IMP)implementation;
+- (MKSimpleMethod *)setterWithImplementation:(IMP)implementation;
 
 @end

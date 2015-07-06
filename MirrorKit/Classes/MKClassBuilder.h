@@ -11,6 +11,8 @@
 #pragma mark - MKClassBuilder -
 @interface MKClassBuilder : NSObject
 
+@property (nonatomic, readonly) Class workingClass;
+
 /** Implicitly inherits from \c NSObject with \c 0 extra bytes. */
 + (instancetype)allocateClass:(NSString *)name;
 /** Calls \c -allocateClass:superclass:extraBytes: with \c 0 extra bytes. */
