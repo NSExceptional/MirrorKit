@@ -97,10 +97,10 @@ int main(int argc, const char * argv[]) {
             return self;
         })];
         MKSimpleMethod *mFoo = [MKSimpleMethod buildMethodNamed:@"foo" withTypes:mFooTypes implementation:imp_implementationWithBlock(^(id self) {
-            NSLog(@"%s %@", __func__, [self name]);
+            NSLog(@"-[%@ foo] %@", NSStringFromClass([self class]), [self name]);
         })];
         MKSimpleMethod *mBar = [MKSimpleMethod buildMethodNamed:@"bar:" withTypes:mBarTypes implementation:imp_implementationWithBlock(^(id self, id anyobj) {
-            NSLog(@"%s barrrrrrr %lu: %@", __func__, [self length], [anyobj description]);
+            NSLog(@"-[%@ bar:] %lu: %@", NSStringFromClass([self class]), [self length], [anyobj description]);
         })];
 
         // Create some property attributes, using either MKMutablePropertyAttributes or a dictionary to create an MKPropertyAttributes object
@@ -114,19 +114,12 @@ int main(int argc, const char * argv[]) {
         MKPropertyAttributes *lengthAttributes = [MKPropertyAttributes attributesFromDictionary:lengthAttributesDict];
         
         // Initialize some properties with those attributes...
-//        NSArray *ivars = [(NSObject *)builder.workingClass alliv]
         MKProperty *pName = [MKProperty propertyWithName:@"name" attributes:nameAttributes];
         MKProperty *pLength = [MKProperty propertyWithName:@"length" attributes:lengthAttributes];
-        // Properties need getters and setters! These aren't too straightforward, sadly. The casting is necessary.
-        MKSimpleMethod *getName = [pName getterWithImplementation:imp_implementationWithBlock(^(id self) {
-            return *(id __strong*)[self getIVarAddressByName:iName.name];
-        })];
-        MKSimpleMethod *getLength = [pLength getterWithImplementation:imp_implementationWithBlock(^(id self) {
-            return *(NSUInteger*)[self getIVarAddressByName:iLength.name];
-        })];
-        MKSimpleMethod *setLength = [pLength setterWithImplementation:imp_implementationWithBlock(^(id self, NSUInteger len) {
-            [self setIVarByName:iLength.name value:&len size:sizeof(len)];
-        })];
+        // Properties need getters and setters! These aren't too straightforward, sadly. The casting is necessary. These macros make it easier.
+        MKSimpleMethod *getName   = MKPropertyGetter(pName, id __strong);
+        MKSimpleMethod *getLength = MKPropertyGetter(pLength, NSUInteger);
+        MKSimpleMethod *setLength = MKPropertySetter(pLength, NSUInteger);
         
         // Add the methods, and properties
         [builder addMethods:@[minit, mFoo, mBar, getName, getLength, setLength]];
