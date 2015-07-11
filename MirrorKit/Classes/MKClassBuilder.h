@@ -17,8 +17,11 @@
 + (instancetype)allocateClass:(NSString *)name;
 /** Calls \c -allocateClass:superclass:extraBytes: with \c 0 extra bytes. */
 + (instancetype)allocateClass:(NSString *)name superclass:(Class)superclass;
-/** Allocates a new class object with the given name and superclass. Classes created this way must be registered with \c -registerClass before being used. */
+/** Allocates a new class object with the given name and superclass. Pass \c nil to \e superclass to create a new root class.
+ Classes created this way must be registered with \c -registerClass before being used. */
 + (instancetype)allocateClass:(NSString *)name superclass:(Class)superclass extraBytes:(size_t)bytes;
+/** Allocates a new root class object with the given name and \c 0 extra bytes. Classes created this way must be registered with \c -registerClass before being used. */
++ (instancetype)allocateRootClass:(NSString *)name;
 /** Use this to modify existing classes. @warning You cannot add instance variables to existing classes. */
 + (instancetype)builderForClass:(Class)cls;
 

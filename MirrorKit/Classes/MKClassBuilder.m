@@ -30,8 +30,13 @@
 }
 
 + (instancetype)allocateClass:(NSString *)name superclass:(Class)superclass extraBytes:(size_t)bytes {
-    NSParameterAssert(name); NSParameterAssert(superclass);
+    NSParameterAssert(name);
     return [[self alloc] initWithClass:objc_allocateClassPair(superclass, name.UTF8String, bytes)];
+}
+
++ (instancetype)allocateRootClass:(NSString *)name {
+    NSParameterAssert(name);
+    return [[self alloc] initWithClass:objc_allocateClassPair(Nil, name.UTF8String, 0)];
 }
 
 + (instancetype)builderForClass:(Class)cls {
