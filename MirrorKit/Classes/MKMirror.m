@@ -88,22 +88,22 @@
 
 - (MKMethod *)methodNamed:(NSString *)name {
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"selectorString", name];
-    return [self.methods filteredArrayUsingPredicate:filter][0];
+    return [self.methods filteredArrayUsingPredicate:filter].firstObject;
 }
 
 - (MKProperty *)propertyNamed:(NSString *)name {
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"name", name];
-    return [self.methods filteredArrayUsingPredicate:filter][0];
+    return [self.methods filteredArrayUsingPredicate:filter].firstObject;
 }
 
 - (MKIVar *)ivarNamed:(NSString *)name {
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"name", name];
-    return [self.methods filteredArrayUsingPredicate:filter][0];
+    return [self.methods filteredArrayUsingPredicate:filter].firstObject;
 }
 
 - (MKProtocol *)protocolNamed:(NSString *)name {
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"name", name];
-    return [self.methods filteredArrayUsingPredicate:filter][0];
+    return [self.methods filteredArrayUsingPredicate:filter].firstObject;
 }
 
 @end
