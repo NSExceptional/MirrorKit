@@ -56,7 +56,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ name=%@, registered=%hhd>",
+    return [NSString stringWithFormat:@"<%@ name=%@, registered=%d>",
             NSStringFromClass(self.class), self.name, self.isRegistered];
 }
 

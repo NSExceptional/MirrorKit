@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MKSimpleMethod.h"
+#import "MirrorKit-Constants.h"
 @import ObjectiveC;
 
 @interface MKMethod : MKSimpleMethod
@@ -23,14 +24,21 @@
 @property (nonatomic, readonly) NSMethodSignature *signature;
 /** Same as \e typeEncoding but with parameter sizes up front and offsets after the types. */
 @property (nonatomic, readonly) NSString          *signatureString;
+@property (nonatomic, readonly) MKTypeEncoding    returnType;
 
 - (void)swapImplementations:(MKMethod *)method;
 
 #define MKMagicNumber 0xdeadbeef
 #define MKArg(expr) MKMagicNumber, @encode(__typeof__(expr)), (__typeof__(expr) []){ expr }
-/** Throws an exception if the method returns anything but \c id. */
+
+/** Sends a message to \e target, and returns it's value, or \c nil if not applicable.
+ @discussion You may send any message with this method. Primitive return values will be wrapped
+ in instances of \c NSNumber and \c NSValue. \c void and bitfield returning methods return \c nil.
+ \c SEL return types are converted to strings using \c NSStringFromSelector.
+ @return The object returned by this method, or an instance of \c NSValue or \c NSNumber containing
+ the primitive return type, or a string for \c SEL return types. */
 - (id)sendMessage:(id)target, ...;
-/** Used for other return types. Pass \c NULL to the first parameter for void methods. */
+/** Used internally by \c sendMessage:target,. Pass \c NULL to the first parameter for void methods. */
 - (void)getReturnValue:(void *)retPtr forMessageSend:(id)target, ...;
 
 @end

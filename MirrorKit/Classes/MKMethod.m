@@ -7,6 +7,7 @@
 //
 
 #import "MKMethod.h"
+#import "MKMirror.h"
 
 @implementation MKMethod
 @dynamic implementation;
@@ -54,6 +55,7 @@
     _signatureString   = @(method_getTypeEncoding(self.objc_method));
     _signature         = [NSMethodSignature signatureWithObjCTypes:self.signatureString.UTF8String];
     _typeEncoding      = [_signatureString stringByReplacingOccurrencesOfString:@"[0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, _signatureString.length)];
+    _returnType        = (MKTypeEncoding)[self.signatureString characterAtIndex:0];
 }
 
 #pragma mark Setters
@@ -72,18 +74,150 @@
     [method examine];
 }
 
-// Code borrowed from MAObjcRuntime, by Mike Ash.
+// Some code borrowed from MAObjcRuntime, by Mike Ash.
 - (id)sendMessage:(id)target, ... {
-    // Message must return type id
-    NSParameterAssert([self.signatureString hasPrefix:@(@encode(id))]);
-    
     id ret = nil;
-    
     va_list args;
     va_start(args, target);
-    [self getReturnValue:&ret forMessageSend:target arguments:args];
-    va_end(args);
     
+    switch (self.returnType) {
+        case MKTypeEncodingUnknown: {
+            [self getReturnValue:NULL forMessageSend:target arguments:args];
+            break;
+        }
+        case MKTypeEncodingChar: {
+            char val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingInt: {
+            int val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingShort: {
+            short val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingLong: {
+            long val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingLongLong: {
+            long long val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingUnsignedChar: {
+            unsigned char val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingUnsignedInt: {
+            unsigned int val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingUnsignedShort: {
+            unsigned short val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingUnsignedLong: {
+            unsigned long val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingUnsignedLongLong: {
+            unsigned long long val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingFloat: {
+            float val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingDouble: {
+            double val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingCBool: {
+            bool val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingVoid: {
+            [self getReturnValue:NULL forMessageSend:target arguments:args];
+            return nil;
+            break;
+        }
+        case MKTypeEncodingCString: {
+            char * val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = @(val);
+            break;
+        }
+        case MKTypeEncodingObjcObject: {
+            id val = nil;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = val;
+            break;
+        }
+        case MKTypeEncodingObjcClass: {
+            Class val = Nil;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = val;
+            break;
+        }
+        case MKTypeEncodingSelector: {
+            SEL val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = NSStringFromSelector(val);
+            break;
+        }
+        case MKTypeEncodingArray: {
+            void * val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = [NSValue valueWithBytes:val objCType:self.signature.methodReturnType];
+            break;
+        }
+        case MKTypeEncodingUnion:
+        case MKTypeEncodingStruct: {
+            void * val = malloc(self.signature.methodReturnLength);
+            [self getReturnValue:val forMessageSend:target arguments:args];
+            ret = [NSValue valueWithBytes:val objCType:self.signature.methodReturnType];
+            break;
+        }
+        case MKTypeEncodingBitField: {
+            [self getReturnValue:NULL forMessageSend:target arguments:args];
+            break;
+        }
+        case MKTypeEncodingPointer: {
+            void * val = 0;
+            [self getReturnValue:&val forMessageSend:target arguments:args];
+            ret = [NSValue valueWithPointer:val];
+            break;
+        }
+    }
+    
+    va_end(args);
     return ret;
 }
 
@@ -101,7 +235,6 @@
     NSUInteger argumentCount = self.signature.numberOfArguments;
     
     invocation.target   = target;
-    invocation.selector = self.selector;
     
     for(NSUInteger i = 2; i < argumentCount; i++) {
         int cookie = va_arg(args, int);
@@ -125,7 +258,9 @@
         [invocation setArgument:argPointer atIndex:i];
     }
     
-    [invocation invoke];
+    // Hack to make NSInvocation invoke the desired implementation
+    void (*invokeWithIMP)(id, SEL, IMP) = (void *)[invocation methodForSelector:NSSelectorFromString(@"invokeUsingIMP:")];
+    invokeWithIMP(invocation, 0, self.implementation);
     
     if(self.signature.methodReturnLength && retPtr)
         [invocation getReturnValue:retPtr];

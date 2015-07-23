@@ -21,6 +21,7 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
+        
         TestRoot *ro = [TestRoot new];
         TestChild *c = [TestChild new];
         MKMirror *rootmirror  = [MKMirror reflect:ro];
@@ -59,7 +60,7 @@ int main(int argc, const char * argv[]) {
         // Make the selector
         SEL printfoobar = sel_registerName("printFoo:bar:");
         // Actually add the method; do not include _cmd in the block's arguments list
-        BOOL didAddMethod = [ro addMethod:printfoobar typeEncoding:types implementation:imp_implementationWithBlock(^(id self, NSString *s, NSUInteger i) {
+        BOOL didAddMethod = [ro.class addMethod:printfoobar typeEncoding:types implementation:imp_implementationWithBlock(^(id self, NSString *s, NSUInteger i) {
             NSLog(@"Called printFoo:bar: %@ : %lu", s, i);
             return [s capitalizedString];
         })];

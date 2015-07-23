@@ -42,4 +42,16 @@
     NSLog(@"rootWithFoo: %@ andBar: %f", foo, bar);
 }
 
+- (char *)string {
+    return "successful string";
+}
+
+- (CGRect)rect {
+    return CGRectMake(1, 2, 3, 4);
+}
+
+- (MKStruct)structure {
+    return (MKStruct){-5, 3.14159, 50};
+}
+
 @end

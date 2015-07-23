@@ -86,19 +86,19 @@
     return methods;
 }
 
-- (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton {
++ (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton {
     return class_addMethod(self.class, selector, implementaiton, typeEncoding.UTF8String);
 }
 
-- (void)replaceImplementationOfMethod:(MKMethod *)method with:(IMP)implementation {
++ (void)replaceImplementationOfMethod:(MKMethod *)method with:(IMP)implementation {
     class_replaceMethod(self.class, method.selector, implementation, method.typeEncoding.UTF8String);
 }
 
-- (void)swizzle:(MKMethod *)original with:(MKMethod *)other {
++ (void)swizzle:(MKMethod *)original with:(MKMethod *)other {
     [self.class swizzle:self.class original:original.selector with:other.selector];
 }
 
-- (BOOL)swizzleByName:(NSString *)original with:(NSString *)other {
++ (BOOL)swizzleByName:(NSString *)original with:(NSString *)other {
     NSParameterAssert(original); NSParameterAssert(other);
     SEL originalMethod = NSSelectorFromString(original);
     SEL newMethod      = NSSelectorFromString(other);

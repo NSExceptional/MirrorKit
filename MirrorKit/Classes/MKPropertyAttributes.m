@@ -53,7 +53,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ ivar=%@, readonly=%hhd, nonatomic=%hhd, getter=%@, setter=%@>",
+    return [NSString stringWithFormat:@"<%@ ivar=%@, readonly=%d, nonatomic=%d, getter=%@, setter=%@>",
             NSStringFromClass(self.class), self.backingIVar?:@"none", self.isReadOnly, self.isNonatomic, NSStringFromSelector(self.customGetter)?:@" ", NSStringFromSelector(self.customSetter)?:@" "];
 }
 

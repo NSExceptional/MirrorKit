@@ -7,6 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGGeometry.h>
+
+typedef struct structure {
+    int x;
+    double y;
+    unsigned long long z;
+} MKStruct;
 
 @interface TestRoot : NSObject
 
@@ -15,6 +22,10 @@
 - (NSInteger)root_integer;
 - (id)root_id;
 - (void)rootWithFoo:(id)foo andBar:(CGFloat)bar;
+- (char *)string;
+- (CGRect)rect;
+- (MKStruct)structure;
+
 
 @property (nonatomic, readonly) NSString *identifier;
 @property (nonatomic, readonly) NSObject *obj;

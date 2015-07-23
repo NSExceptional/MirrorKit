@@ -34,12 +34,12 @@
 + (NSArray *)allMethods;
 
 /** @return YES if the method was added successfully, \c NO otherwise. */
-- (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton;
++ (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton;
 /** Not sure, but probably safe to make sure the given \c IMP takes the same parameters as the given method. */
-- (void)replaceImplementationOfMethod:(MKMethod *)method with:(IMP)implementation;
-- (void)swizzle:(MKMethod *)original with:(MKMethod *)other;
++ (void)replaceImplementationOfMethod:(MKMethod *)method with:(IMP)implementation;
++ (void)swizzle:(MKMethod *)original with:(MKMethod *)other;
 /** Returns \c YES if successful, \c NO if not. */
-- (BOOL)swizzleByName:(NSString *)original with:(NSString *)other;
++ (BOOL)swizzleByName:(NSString *)original with:(NSString *)other;
 + (void)swizzle:(Class)cls original:(SEL)original with:(SEL)other;
 
 @end

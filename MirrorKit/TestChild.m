@@ -17,9 +17,13 @@
     [super setTimestamp:timestamp];
 }
 
-- (void)root_void {
-    NSLog(@"child override: root_void");
-    [super root_void];
+- (void)rootFoo {
+    NSLog(@"child override: rootFoo");
+    [super rootFoo];
+}
+
+- (char *)string {
+    return "Child string";
 }
 
 
