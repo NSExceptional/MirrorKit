@@ -57,6 +57,82 @@
             NSStringFromClass(self.class), self.backingIVar?:@"none", self.isReadOnly, self.isNonatomic, NSStringFromSelector(self.customGetter)?:@" ", NSStringFromSelector(self.customSetter)?:@" "];
 }
 
+- (objc_property_attribute_t *)copyAttributesList:(unsigned int *)attributesCount {
+    NSDictionary *attributes = self.attributesString.propertyAttributes;
+    *attributesCount = (unsigned int)attributes.allKeys.count;
+    objc_property_attribute_t *propertyAttributes = malloc(attributes.allKeys.count*sizeof(objc_property_attribute_t));
+    
+    NSUInteger i = 0;
+    for (NSString *key in attributes.allKeys) {
+        MKPropertyAttribute c = (MKPropertyAttribute)[key characterAtIndex:0];
+        switch (c) {
+            case MKPropertyAttributeTypeEncoding: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyTypeEncoding.UTF8String, self.typeEncoding.UTF8String};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeBackingIVarName: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyBackingIVarName.UTF8String, self.backingIVar.UTF8String};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeCopy: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyCopy.UTF8String, ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeCustomGetter: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyCustomGetter.UTF8String, NSStringFromSelector(self.customGetter).UTF8String ?: ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeCustomSetter: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyCustomSetter.UTF8String, NSStringFromSelector(self.customSetter).UTF8String ?: ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeDynamic: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyDynamic.UTF8String, ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeGarbageCollectible: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyGarbageCollectible.UTF8String, ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeNonAtomic: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyNonAtomic.UTF8String, ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeOldTypeEncoding: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyOldTypeEncoding.UTF8String, self.oldTypeEncoding.UTF8String ?: ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeReadOnly: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyReadOnly.UTF8String, ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeRetain: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyRetain.UTF8String, ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+            case MKPropertyAttributeWeak: {
+                objc_property_attribute_t pa = {MKPropertyAttributeKeyWeak.UTF8String, ""};
+                propertyAttributes[i] = pa;
+                break;
+            }
+        }
+        i++;
+    }
+    
+    return propertyAttributes;
+}
+
 @end
 
 

@@ -14,18 +14,24 @@
 @interface MKMethod : MKSimpleMethod
 
 + (instancetype)method:(Method)method;
+/** Constructs an \c MKMethod for the given selector on the given class.
+ @return The newly constructed \c MKMethod object, or \c nil if \e if the specified class or its superclasses do not contain an instance method with the specified selector. */
 + (instancetype)methodForSelector:(SEL)selector class:(Class)cls;
 
 @property (nonatomic, readonly) Method            objc_method;
-/** Setting \c implementation will change the implementation of this method for the entire class which implements said method. It will also not modify the selector of said method. */
+/** The implementation of the method.
+ @discussion Setting \c implementation will change the implementation of this method for the entire class which implements said method. It will also not modify the selector of said method. */
 @property (nonatomic          ) IMP               implementation;
+/** The number of arguments to the method. */
 @property (nonatomic, readonly) NSUInteger        numberOfArguments;
-@property (nonatomic, readonly) NSString          *selectorString;
+/** The \c NSMethodSignature object corresponding to the method's type encoding. */
 @property (nonatomic, readonly) NSMethodSignature *signature;
 /** Same as \e typeEncoding but with parameter sizes up front and offsets after the types. */
 @property (nonatomic, readonly) NSString          *signatureString;
+/** The return type of the method. */
 @property (nonatomic, readonly) MKTypeEncoding    returnType;
 
+/** Swizzles the recieving method with the given method. */
 - (void)swapImplementations:(MKMethod *)method;
 
 #define MKMagicNumber 0xdeadbeef

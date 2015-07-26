@@ -34,7 +34,7 @@
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@ class=%@, %lu properties, %lu ivars, %lu methods, %lu protocols>",
-            NSStringFromClass(self.class), self.className, self.properties.count, self.instanceVariables.count, self.methods.count, self.protocols.count];
+            NSStringFromClass(self.class), self.className, (unsigned long)self.properties.count, (unsigned long)self.instanceVariables.count, (unsigned long)self.methods.count, (unsigned long)self.protocols.count];
 }
 
 - (void)examine {

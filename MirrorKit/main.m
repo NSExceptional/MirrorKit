@@ -27,19 +27,16 @@ int main(int argc, const char * argv[]) {
         MKMirror *rootmirror  = [MKMirror reflect:ro];
         MKMirror *childmirror = [MKMirror reflect:c];
         
+        NSString *typef = MKTypeEncodingString(@encode(void), 2, @encode(NSString *), @encode(bool));
+        
         // Replace a method //
         
         // Test foo before replacement
         [ro rootFoo];
         
         // Find some methods
-        MKMethod *oldFoo, *newFoo;
-        for (MKMethod *m in rootmirror.methods) {
-            if ([m.selectorString isEqualToString:@"rootFoo"])
-                oldFoo = m;
-            else if ([m.selectorString isEqualToString:@"rootBar"])
-                newFoo = m;
-        }
+        MKMethod *oldFoo = [rootmirror methodNamed:@"rootFoo"];
+        MKMethod *newFoo = [rootmirror methodNamed:@"rootBar"];
         
         // Replace one
         IMP fooimp = imp_implementationWithBlock(^(id self, SEL _cmd) {
@@ -48,7 +45,7 @@ int main(int argc, const char * argv[]) {
         oldFoo.implementation = fooimp;
         // Test foo after replacement
         [ro rootFoo];
-        // Replaced across all instances of the class
+        // rootFoo is replaced across all instances of the class as shown here
         TestRoot *rf = [TestRoot new];
         [rf rootFoo];
         
@@ -56,7 +53,7 @@ int main(int argc, const char * argv[]) {
         // Add an entirely new method //
         
         // Type encoding string [return type][self][_cmd][first param][second param]
-        NSString *types = [NSString stringWithFormat:@"%s%s%s%s%s", @encode(id), @encode(id), @encode(SEL), @encode(id), @encode(NSUInteger)];
+        NSString *types = MKTypeEncodingString(@encode(id), 2, @encode(id), @encode(NSUInteger));
         // Make the selector
         SEL printfoobar = sel_registerName("printFoo:bar:");
         // Actually add the method; do not include _cmd in the block's arguments list
@@ -82,14 +79,14 @@ int main(int argc, const char * argv[]) {
         MKClassBuilder *builder = [MKClassBuilder allocateClass:@"NSAtom"];
         
         // Create and add IVars...
-        MKIVarBuilder *iName = [MKIVarBuilder name:@"_name" size:sizeof(id) alignment:log2(sizeof(id)) typeEncoding:@(@encode(id))];
-        MKIVarBuilder *iLength = [MKIVarBuilder name:@"_length" size:sizeof(NSUInteger) alignment:log2(sizeof(NSUInteger)) typeEncoding:@(@encode(NSUInteger))];
+        MKIVarBuilder *iName   = MKIVarBuilderWithNameAndType(@"_name", id);
+        MKIVarBuilder *iLength = MKIVarBuilderWithNameAndType(@"_length", NSUInteger);
         [builder addIVars:@[iName, iLength]];
         
         // Create some methods...
-        NSString *minitTypes = [NSString stringWithFormat:@"%s%s%s", @encode(id), @encode(id), @encode(SEL)];
-        NSString *mFooTypes = [NSString stringWithFormat:@"%s%s%s", @encode(void), @encode(id), @encode(SEL)];
-        NSString *mBarTypes = [NSString stringWithFormat:@"%s%s%s%s", @encode(void), @encode(id), @encode(SEL), @encode(id)];
+        NSString *minitTypes  = MKTypeEncodingString(@encode(id), 0);
+        NSString *mFooTypes   = MKTypeEncodingString(@encode(void), 0);
+        NSString *mBarTypes   = MKTypeEncodingString(@encode(void), 1, @encode(id));
         MKSimpleMethod *minit = [MKSimpleMethod buildMethodNamed:@"init" withTypes:minitTypes implementation:imp_implementationWithBlock(^(id self) {
             NSUInteger len = 5;
             [self setIVarByName:iLength.name value:&len size:sizeof(len)];
@@ -106,7 +103,7 @@ int main(int argc, const char * argv[]) {
 
         // Create some property attributes, using either MKMutablePropertyAttributes or a dictionary to create an MKPropertyAttributes object
         MKMutablePropertyAttributes *nameAttributes = [MKMutablePropertyAttributes attributes];
-        nameAttributes.isReadOnly = YES;
+        nameAttributes.isReadOnly  = YES;
         nameAttributes.backingIVar = iName.name;
         [nameAttributes setTypeEncodingChar:MKTypeEncodingObjcObject];
         NSDictionary *lengthAttributesDict = @{MKPropertyAttributeKeyNonAtomic:       @YES,
@@ -115,7 +112,7 @@ int main(int argc, const char * argv[]) {
         MKPropertyAttributes *lengthAttributes = [MKPropertyAttributes attributesFromDictionary:lengthAttributesDict];
         
         // Initialize some properties with those attributes...
-        MKProperty *pName = [MKProperty propertyWithName:@"name" attributes:nameAttributes];
+        MKProperty *pName   = [MKProperty propertyWithName:@"name" attributes:nameAttributes];
         MKProperty *pLength = [MKProperty propertyWithName:@"length" attributes:lengthAttributes];
         // Properties need getters and setters! These aren't too straightforward, sadly. The casting is necessary. These macros make it easier.
         MKSimpleMethod *getName   = MKPropertyGetter(pName, id __strong);

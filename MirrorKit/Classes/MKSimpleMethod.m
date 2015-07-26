@@ -24,6 +24,7 @@
         _selector = selector;
         _typeEncoding = types;
         _implementation = imp;
+        _selectorString = NSStringFromSelector(self.selector);
     }
     
     return self;

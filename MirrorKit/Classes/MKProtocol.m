@@ -47,7 +47,8 @@
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@ name=%@, %lu properties, %lu required methods, %lu optional methods, %lu protocols>",
-            NSStringFromClass(self.class), self.name, self.properties.count, self.requiredMethods.count, self.optionalMethods.count, self.protocols.count];
+            NSStringFromClass(self.class), self.name, (unsigned long)self.properties.count,
+            (unsigned long)self.requiredMethods.count, (unsigned long)self.optionalMethods.count, (unsigned long)self.protocols.count];
 }
 
 - (void)examine {
@@ -108,6 +109,7 @@
         _objc_description = md;
         _selector         = md.name;
         _typeEncoding     = @(md.types);
+        _returnType       = (MKTypeEncoding)[self.typeEncoding characterAtIndex:0];
     }
     
     return self;

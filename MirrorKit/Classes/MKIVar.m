@@ -31,7 +31,7 @@
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@ name=%@, encoding=%@, offset=%ld>",
-            NSStringFromClass(self.class), self.name, self.typeEncoding, self.offset];
+            NSStringFromClass(self.class), self.name, self.typeEncoding, (long)self.offset];
 }
 
 - (void)examine {

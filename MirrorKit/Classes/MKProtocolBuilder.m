@@ -7,6 +7,7 @@
 //
 
 #import "MKProtocolBuilder.h"
+#import "MKProtocol.h"
 #import "MKProperty.h"
 @import ObjectiveC;
 
@@ -64,12 +65,12 @@
     protocol_addProtocol(self.workingProtocol, protocol);
 }
 
-- (Protocol *)registerProtocol {
+- (MKProtocol *)registerProtocol {
     if (self.isRegistered) [NSException raise:NSInternalInconsistencyException format:@"Protocol is already registered"];
     
     _isRegistered = YES;
     objc_registerProtocol(self.workingProtocol);
-    return self.workingProtocol;
+    return [MKProtocol protocol:self.workingProtocol];
 }
 
 @end

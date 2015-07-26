@@ -10,7 +10,25 @@
 #import "MKProperty.h"
 #import "MKMethod.h"
 #import "MKIVar.h"
+#import "MKPropertyAttributes.h"
 
+
+NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
+    if (returnType == NULL) return nil;
+    
+    NSMutableString *encoding = [NSMutableString string];
+    [encoding appendFormat:@"%s%s%s", returnType, @encode(id), @encode(SEL)];
+    
+    va_list args;
+    va_start(args, count);
+    char *type = va_arg(args, char *);
+    for (NSUInteger i = 0; i < count; i++, type = va_arg(args, char *)) {
+        [encoding appendFormat:@"%s", type];
+    }
+    va_end(args);
+    
+    return encoding.copy;
+}
 
 #pragma mark - Reflection -
 
@@ -90,12 +108,12 @@
     return class_addMethod(self.class, selector, implementaiton, typeEncoding.UTF8String);
 }
 
-+ (void)replaceImplementationOfMethod:(MKMethod *)method with:(IMP)implementation {
-    class_replaceMethod(self.class, method.selector, implementation, method.typeEncoding.UTF8String);
++ (IMP)replaceImplementationOfMethod:(MKSimpleMethod *)method with:(IMP)implementation {
+    return class_replaceMethod(self.class, method.selector, implementation, method.typeEncoding.UTF8String);
 }
 
-+ (void)swizzle:(MKMethod *)original with:(MKMethod *)other {
-    [self.class swizzle:self.class original:original.selector with:other.selector];
++ (void)swizzle:(MKSimpleMethod *)original with:(MKSimpleMethod *)other {
+    [self.class swizzleBySelector:original.selector with:other.selector];
 }
 
 + (BOOL)swizzleByName:(NSString *)original with:(NSString *)other {
@@ -105,11 +123,12 @@
     if (originalMethod == 0 || newMethod == 0)
         return NO;
     
-    [self.class swizzle:self.class original:originalMethod with:newMethod];
+    [self.class swizzleBySelector:originalMethod with:newMethod];
     return YES;
 }
 
-+ (void)swizzle:(Class)cls original:(SEL)original with:(SEL)other {
++ (void)swizzleBySelector:(SEL)original with:(SEL)other {
+    Class cls = [self class];
     Method originalMethod = class_getInstanceMethod(cls, original);
     Method newMethod = class_getInstanceMethod(cls, other);
     if (class_addMethod(cls, original, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))) {
@@ -210,10 +229,14 @@
 }
 
 - (void)replaceProperty:(MKProperty *)property {
+    [self replaceProperty:property.name attributes:property.attributes];
+}
+
+- (void)replaceProperty:(NSString *)name attributes:(MKPropertyAttributes *)attributes {
     unsigned int count;
-    objc_property_attribute_t *attributes = [property copyAttributesList:&count];
-    class_replaceProperty(self.class, property.name.UTF8String, attributes, count);
-    free(attributes);
+    objc_property_attribute_t *objc_attributes = [attributes copyAttributesList:&count];
+    class_replaceProperty(self.class, name.UTF8String, objc_attributes, count);
+    free(objc_attributes);
 }
 
 @end
