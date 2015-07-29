@@ -18,6 +18,8 @@ pod "MirrorKit"
 
 # Usage
 
+Documentation for MirrorKit is on [Cocoadocs](http://cocoadocs.org/docsets/MirrorKit/1.0.0/Classes/MKMirror.html).
+
 ``` objc
 #import "MirrorKit.h"
 ...
