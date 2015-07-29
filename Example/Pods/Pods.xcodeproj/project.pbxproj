@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		023ACCBE0325BEAF1F2E35FEA125B050 /* NSObject+Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 817A621C059DB5C3DED26439CF730415 /* NSObject+Reflection.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		0300FE8565A39A336EF9121B6F277665 /* MirrorKit-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 872874678F06AE1ABEBEF8A6FBBE9CE5 /* MirrorKit-Constants.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		03F72B2021BDC793A71253457905A6D8 /* MKSimpleMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BF2EBC55AF29C6384D43CDC43F8C5F /* MKSimpleMethod.h */; };
+		0D647AED9697B71485F6109309ABECD3 /* MKProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D86CED14E2B7DADF783DE7D2244810B /* MKProtocol.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		2195827EEE05465E3B9506D02933B7D8 /* MKMirror.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1DB42B41EB5A875ACF1DF9FE4669B4 /* MKMirror.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		325D040328C7095F7C8F6B83E197FD8F /* MKIVar.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DC216F0846EFFADF8188A2254058EB7 /* MKIVar.h */; };
+		34C323777C1963159CB6CA1DCD0F53C2 /* MKMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = B47B25CBA3CEAC07904250A5D31968DA /* MKMethod.h */; };
+		354F524F2A17C0866EC1A3EE8919A555 /* MKPropertyAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FD2E44AE38AC6658074CD13D31268EB /* MKPropertyAttributes.h */; };
+		3ED8179F57E97DBD3BD93CC8E7A41BD1 /* MirrorKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF9258660C20A1D3CB0CDE97137636 /* MirrorKit.h */; };
+		431686E3B97DDE795AB7D41249338813 /* MKClassBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4EDDE5062869E6FE478D990AE01F4A /* MKClassBuilder.h */; };
+		4F022C09486965076BA3CC736D1D6EE0 /* MKPropertyAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BEEC742FB795AC7C712C3397937C8E /* MKPropertyAttributes.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		4F221759CC354F04D94F9E0E4335C32E /* NSObject+Reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = C34B567BBE7571724B7437BE429F9275 /* NSObject+Reflection.h */; };
+		589192E2A9A1C173A77AAE4A66AB0742 /* MKIVar.m in Sources */ = {isa = PBXBuildFile; fileRef = 006BF58345684BC0DF08220478147BCB /* MKIVar.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		6913CEA1A0DDEA90873733F1505335EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92035CDC79B44AAE46F5C6F1E6B57B5 /* Foundation.framework */; };
+		6D5153B9D0A2C35A858A1CD36A281B76 /* MKObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2331F020771D25524C840018B2C367DA /* MKObject.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		75061131900E463C54BF3C43D38C2BA8 /* MKMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87F6BEC07BE53F879AF178F36D07D9 /* MKMethod.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		815BD726281169A1A17E74B0DB0CBF60 /* MirrorKit-Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 99BC9A2DBB442D11C27F9C0F2AFAC15F /* MirrorKit-Constants.h */; };
+		8169A6EFF13AA5B76DFFEF98EB5E363D /* MKMirror.h in Headers */ = {isa = PBXBuildFile; fileRef = AD4BFA16C695D31F8763716764BB0DFF /* MKMirror.h */; };
+		8794235291CE0CD1522A57124A494EA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92035CDC79B44AAE46F5C6F1E6B57B5 /* Foundation.framework */; };
+		89D5ABED8C2C3F30286A8BB269F5A7FD /* Pods-MirrorKit_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DD57AED8C911E943EB7F984390CF2287 /* Pods-MirrorKit_Tests-dummy.m */; };
+		AA80333D6B8C5C20DE8712916B300945 /* MKProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = DFCD23358DE06C1158B18DACA2B9B17E /* MKProtocol.h */; };
+		B19756C18E7113F99F3ED706F59BA852 /* MKClassBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D0CC7F3F0F38774D8B8A85CB4920627 /* MKClassBuilder.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		C42A28461B1317917F6D406DC007568E /* MKSimpleMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 51C95E2212A524C37B59DBC77C7D4435 /* MKSimpleMethod.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		C9023A98440740EB04C0280A13249B1C /* NSString+Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = FBCFA17CC46B323284019423E2ED3A10 /* NSString+Utilities.h */; };
+		D15A2E65323504D53C669AFFEE326BF0 /* NSDictionary+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A406EFC7A02280189F79E8EB161D6C /* NSDictionary+Utilities.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		D39668DF3FE3ABBB76AFA58B5CAEAC8B /* MKProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 668D4AB39B7693956AC2A71987B13986 /* MKProperty.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		D3A80FC08132630B657194D76AD6B256 /* MirrorKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6AB90D7A1138D159761610BD6B6C01 /* MirrorKit-dummy.m */; };
+		EBF81349A3340D86D1FED30C05833550 /* NSDictionary+Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 0316A88777B9F22D5B6296654FC09BDB /* NSDictionary+Utilities.h */; };
+		F528949D8828BC89D2DADDC947C33B8D /* MKProtocolBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7620F71DE8D3E11DB70D31181C973 /* MKProtocolBuilder.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		F83F91CDFDC443623F2617A8DD0645F9 /* MKProtocolBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = F7623A17448067AF079072E24C176A1A /* MKProtocolBuilder.h */; };
+		F99CC5955D952DE214CC2396EE23DB3F /* MKProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0C1BAC3F4FD983910D9EDBD6CD22A6 /* MKProperty.h */; };
+		FB11BBE32937972166720C36E2EC4403 /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CC59E5A278AD3FE3C856770F5030AB /* NSString+Utilities.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		FC4138F580B0D1FE1BA3BC6436507E65 /* MKObject.h in Headers */ = {isa = PBXBuildFile; fileRef = A991E935B3CFE3950B995D8AE5C334F8 /* MKObject.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3FDC16E633F2EAABCCB254935CFEA548 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82BE89F3D49F0B1AD240A2D21D36AF96;
+			remoteInfo = MirrorKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		006BF58345684BC0DF08220478147BCB /* MKIVar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKIVar.m; sourceTree = "<group>"; };
+		0316A88777B9F22D5B6296654FC09BDB /* NSDictionary+Utilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Utilities.h"; sourceTree = "<group>"; };
+		10A406EFC7A02280189F79E8EB161D6C /* NSDictionary+Utilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Utilities.m"; sourceTree = "<group>"; };
+		1A838D963C7A5192CB66426ADB732C7E /* Pods-MirrorKit_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MirrorKit_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		20F7620F71DE8D3E11DB70D31181C973 /* MKProtocolBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKProtocolBuilder.m; sourceTree = "<group>"; };
+		2331F020771D25524C840018B2C367DA /* MKObject.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKObject.m; sourceTree = "<group>"; };
+		2D0CC7F3F0F38774D8B8A85CB4920627 /* MKClassBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKClassBuilder.m; sourceTree = "<group>"; };
+		306117C81D7E7DB1F2D52C28EC1D87A7 /* MirrorKit-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "MirrorKit-Private.xcconfig"; sourceTree = "<group>"; };
+		31BEEC742FB795AC7C712C3397937C8E /* MKPropertyAttributes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKPropertyAttributes.m; sourceTree = "<group>"; };
+		40AA96E3F38EBCD12F1A2ABCDB6659CC /* libPods-MirrorKit_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MirrorKit_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C4EDDE5062869E6FE478D990AE01F4A /* MKClassBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKClassBuilder.h; sourceTree = "<group>"; };
+		4CDF9258660C20A1D3CB0CDE97137636 /* MirrorKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MirrorKit.h; sourceTree = "<group>"; };
+		4DC216F0846EFFADF8188A2254058EB7 /* MKIVar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKIVar.h; sourceTree = "<group>"; };
+		51C95E2212A524C37B59DBC77C7D4435 /* MKSimpleMethod.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKSimpleMethod.m; sourceTree = "<group>"; };
+		5D86CED14E2B7DADF783DE7D2244810B /* MKProtocol.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKProtocol.m; sourceTree = "<group>"; };
+		668D4AB39B7693956AC2A71987B13986 /* MKProperty.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKProperty.m; sourceTree = "<group>"; };
+		6BF5F46FC9BFF8CEFA54FC1002F2F5BE /* Pods-MirrorKit_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MirrorKit_Tests-resources.sh"; sourceTree = "<group>"; };
+		7E87F6BEC07BE53F879AF178F36D07D9 /* MKMethod.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKMethod.m; sourceTree = "<group>"; };
+		817A621C059DB5C3DED26439CF730415 /* NSObject+Reflection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Reflection.m"; sourceTree = "<group>"; };
+		81CC59E5A278AD3FE3C856770F5030AB /* NSString+Utilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
+		872874678F06AE1ABEBEF8A6FBBE9CE5 /* MirrorKit-Constants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MirrorKit-Constants.m"; sourceTree = "<group>"; };
+		8FD2E44AE38AC6658074CD13D31268EB /* MKPropertyAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKPropertyAttributes.h; sourceTree = "<group>"; };
+		9359172F5BF5B2ACE1AC9A6FD2943A47 /* MirrorKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MirrorKit-prefix.pch"; sourceTree = "<group>"; };
+		99BC9A2DBB442D11C27F9C0F2AFAC15F /* MirrorKit-Constants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MirrorKit-Constants.h"; sourceTree = "<group>"; };
+		A991E935B3CFE3950B995D8AE5C334F8 /* MKObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKObject.h; sourceTree = "<group>"; };
+		AD4BFA16C695D31F8763716764BB0DFF /* MKMirror.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKMirror.h; sourceTree = "<group>"; };
+		B47B25CBA3CEAC07904250A5D31968DA /* MKMethod.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKMethod.h; sourceTree = "<group>"; };
+		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C34B567BBE7571724B7437BE429F9275 /* NSObject+Reflection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSObject+Reflection.h"; sourceTree = "<group>"; };
+		C465C7FD9046BE4234C7D41A5CF7D9BA /* Pods-MirrorKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MirrorKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		C92035CDC79B44AAE46F5C6F1E6B57B5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		D4D88C94A2271CD82B63A74D90C07DCF /* Pods-MirrorKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MirrorKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		D52D23F758C2FECCFDB1AC8D464586AE /* MirrorKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MirrorKit.xcconfig; sourceTree = "<group>"; };
+		D72769ED92110B7FF5C93B0B8125D854 /* libMirrorKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMirrorKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC0C1BAC3F4FD983910D9EDBD6CD22A6 /* MKProperty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKProperty.h; sourceTree = "<group>"; };
+		DD57AED8C911E943EB7F984390CF2287 /* Pods-MirrorKit_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MirrorKit_Tests-dummy.m"; sourceTree = "<group>"; };
+		DFCD23358DE06C1158B18DACA2B9B17E /* MKProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKProtocol.h; sourceTree = "<group>"; };
+		E6063FB3913C8DDDD664FA4B854149F8 /* Pods-MirrorKit_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MirrorKit_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		EC6AB90D7A1138D159761610BD6B6C01 /* MirrorKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MirrorKit-dummy.m"; sourceTree = "<group>"; };
+		F5BF2EBC55AF29C6384D43CDC43F8C5F /* MKSimpleMethod.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKSimpleMethod.h; sourceTree = "<group>"; };
+		F7623A17448067AF079072E24C176A1A /* MKProtocolBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MKProtocolBuilder.h; sourceTree = "<group>"; };
+		FA1DB42B41EB5A875ACF1DF9FE4669B4 /* MKMirror.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MKMirror.m; sourceTree = "<group>"; };
+		FBCFA17CC46B323284019423E2ED3A10 /* NSString+Utilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C152FD6551389B2F3AD8EB89C0803E24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6913CEA1A0DDEA90873733F1505335EC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA2EE20247062B85DA6DE1AD93A1A1BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8794235291CE0CD1522A57124A494EA6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0707386B6A38899CE3D0D7A408698C48 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4C4EDDE5062869E6FE478D990AE01F4A /* MKClassBuilder.h */,
+				2D0CC7F3F0F38774D8B8A85CB4920627 /* MKClassBuilder.m */,
+				4DC216F0846EFFADF8188A2254058EB7 /* MKIVar.h */,
+				006BF58345684BC0DF08220478147BCB /* MKIVar.m */,
+				B47B25CBA3CEAC07904250A5D31968DA /* MKMethod.h */,
+				7E87F6BEC07BE53F879AF178F36D07D9 /* MKMethod.m */,
+				AD4BFA16C695D31F8763716764BB0DFF /* MKMirror.h */,
+				FA1DB42B41EB5A875ACF1DF9FE4669B4 /* MKMirror.m */,
+				A991E935B3CFE3950B995D8AE5C334F8 /* MKObject.h */,
+				2331F020771D25524C840018B2C367DA /* MKObject.m */,
+				DC0C1BAC3F4FD983910D9EDBD6CD22A6 /* MKProperty.h */,
+				668D4AB39B7693956AC2A71987B13986 /* MKProperty.m */,
+				8FD2E44AE38AC6658074CD13D31268EB /* MKPropertyAttributes.h */,
+				31BEEC742FB795AC7C712C3397937C8E /* MKPropertyAttributes.m */,
+				DFCD23358DE06C1158B18DACA2B9B17E /* MKProtocol.h */,
+				5D86CED14E2B7DADF783DE7D2244810B /* MKProtocol.m */,
+				F7623A17448067AF079072E24C176A1A /* MKProtocolBuilder.h */,
+				20F7620F71DE8D3E11DB70D31181C973 /* MKProtocolBuilder.m */,
+				F5BF2EBC55AF29C6384D43CDC43F8C5F /* MKSimpleMethod.h */,
+				51C95E2212A524C37B59DBC77C7D4435 /* MKSimpleMethod.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		17C9862B03A03AA679F244F21AE006B3 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5DD8202B18307B6EF3B9432E28128740 /* Pods-MirrorKit_Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		2D2B8DF6DEDD2B2E0529E113434D046C /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				34D0748A854422E4615E12AB62AD1239 /* MirrorKit */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		34D0748A854422E4615E12AB62AD1239 /* MirrorKit */ = {
+			isa = PBXGroup;
+			children = (
+				A2EDB1D94F606B1C1DDB4650AAEA6ED2 /* Pod */,
+				E241BFFB41D1BD81393F29FC65CBEC39 /* Support Files */,
+			);
+			name = MirrorKit;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		53F661C0CA7190D2CF05023FB33D61E4 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				C92035CDC79B44AAE46F5C6F1E6B57B5 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		5DD8202B18307B6EF3B9432E28128740 /* Pods-MirrorKit_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E6063FB3913C8DDDD664FA4B854149F8 /* Pods-MirrorKit_Tests-acknowledgements.markdown */,
+				1A838D963C7A5192CB66426ADB732C7E /* Pods-MirrorKit_Tests-acknowledgements.plist */,
+				DD57AED8C911E943EB7F984390CF2287 /* Pods-MirrorKit_Tests-dummy.m */,
+				6BF5F46FC9BFF8CEFA54FC1002F2F5BE /* Pods-MirrorKit_Tests-resources.sh */,
+				D4D88C94A2271CD82B63A74D90C07DCF /* Pods-MirrorKit_Tests.debug.xcconfig */,
+				C465C7FD9046BE4234C7D41A5CF7D9BA /* Pods-MirrorKit_Tests.release.xcconfig */,
+			);
+			name = "Pods-MirrorKit_Tests";
+			path = "Target Support Files/Pods-MirrorKit_Tests";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
+				2D2B8DF6DEDD2B2E0529E113434D046C /* Development Pods */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				CCA510CFBEA2D207524CDA0D73C3B561 /* Products */,
+				17C9862B03A03AA679F244F21AE006B3 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		A2EDB1D94F606B1C1DDB4650AAEA6ED2 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				4CDF9258660C20A1D3CB0CDE97137636 /* MirrorKit.h */,
+				99BC9A2DBB442D11C27F9C0F2AFAC15F /* MirrorKit-Constants.h */,
+				872874678F06AE1ABEBEF8A6FBBE9CE5 /* MirrorKit-Constants.m */,
+				FCD9C85099BE6B3996DFB63E4C81E576 /* Categories */,
+				0707386B6A38899CE3D0D7A408698C48 /* Classes */,
+			);
+			path = Pod;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				53F661C0CA7190D2CF05023FB33D61E4 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CCA510CFBEA2D207524CDA0D73C3B561 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D72769ED92110B7FF5C93B0B8125D854 /* libMirrorKit.a */,
+				40AA96E3F38EBCD12F1A2ABCDB6659CC /* libPods-MirrorKit_Tests.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E241BFFB41D1BD81393F29FC65CBEC39 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D52D23F758C2FECCFDB1AC8D464586AE /* MirrorKit.xcconfig */,
+				306117C81D7E7DB1F2D52C28EC1D87A7 /* MirrorKit-Private.xcconfig */,
+				EC6AB90D7A1138D159761610BD6B6C01 /* MirrorKit-dummy.m */,
+				9359172F5BF5B2ACE1AC9A6FD2943A47 /* MirrorKit-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/MirrorKit";
+			sourceTree = "<group>";
+		};
+		FCD9C85099BE6B3996DFB63E4C81E576 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				0316A88777B9F22D5B6296654FC09BDB /* NSDictionary+Utilities.h */,
+				10A406EFC7A02280189F79E8EB161D6C /* NSDictionary+Utilities.m */,
+				C34B567BBE7571724B7437BE429F9275 /* NSObject+Reflection.h */,
+				817A621C059DB5C3DED26439CF730415 /* NSObject+Reflection.m */,
+				FBCFA17CC46B323284019423E2ED3A10 /* NSString+Utilities.h */,
+				81CC59E5A278AD3FE3C856770F5030AB /* NSString+Utilities.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E90874DA1F4B978B9AF97165109ABC8B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				431686E3B97DDE795AB7D41249338813 /* MKClassBuilder.h in Headers */,
+				325D040328C7095F7C8F6B83E197FD8F /* MKIVar.h in Headers */,
+				34C323777C1963159CB6CA1DCD0F53C2 /* MKMethod.h in Headers */,
+				8169A6EFF13AA5B76DFFEF98EB5E363D /* MKMirror.h in Headers */,
+				FC4138F580B0D1FE1BA3BC6436507E65 /* MKObject.h in Headers */,
+				F99CC5955D952DE214CC2396EE23DB3F /* MKProperty.h in Headers */,
+				354F524F2A17C0866EC1A3EE8919A555 /* MKPropertyAttributes.h in Headers */,
+				AA80333D6B8C5C20DE8712916B300945 /* MKProtocol.h in Headers */,
+				F83F91CDFDC443623F2617A8DD0645F9 /* MKProtocolBuilder.h in Headers */,
+				03F72B2021BDC793A71253457905A6D8 /* MKSimpleMethod.h in Headers */,
+				815BD726281169A1A17E74B0DB0CBF60 /* MirrorKit-Constants.h in Headers */,
+				3ED8179F57E97DBD3BD93CC8E7A41BD1 /* MirrorKit.h in Headers */,
+				EBF81349A3340D86D1FED30C05833550 /* NSDictionary+Utilities.h in Headers */,
+				4F221759CC354F04D94F9E0E4335C32E /* NSObject+Reflection.h in Headers */,
+				C9023A98440740EB04C0280A13249B1C /* NSString+Utilities.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		82BE89F3D49F0B1AD240A2D21D36AF96 /* MirrorKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3382A9DA8DBFEB1048672D11A8F942AF /* Build configuration list for PBXNativeTarget "MirrorKit" */;
+			buildPhases = (
+				F55A283D6377A3E523FED892331C4561 /* Sources */,
+				FA2EE20247062B85DA6DE1AD93A1A1BB /* Frameworks */,
+				E90874DA1F4B978B9AF97165109ABC8B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MirrorKit;
+			productName = MirrorKit;
+			productReference = D72769ED92110B7FF5C93B0B8125D854 /* libMirrorKit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D10EB9E7F8DA2E8DEBEC4AB20BC54DFC /* Pods-MirrorKit_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 60E9BB07BA7BEEB6C7FBAEDA9A61D159 /* Build configuration list for PBXNativeTarget "Pods-MirrorKit_Tests" */;
+			buildPhases = (
+				EC926069A82D255B048CF9EDE01E7CB1 /* Sources */,
+				C152FD6551389B2F3AD8EB89C0803E24 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				91C7966C4A6FF5814D4E2DC89904B575 /* PBXTargetDependency */,
+			);
+			name = "Pods-MirrorKit_Tests";
+			productName = "Pods-MirrorKit_Tests";
+			productReference = 40AA96E3F38EBCD12F1A2ABCDB6659CC /* libPods-MirrorKit_Tests.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = CCA510CFBEA2D207524CDA0D73C3B561 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				82BE89F3D49F0B1AD240A2D21D36AF96 /* MirrorKit */,
+				D10EB9E7F8DA2E8DEBEC4AB20BC54DFC /* Pods-MirrorKit_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EC926069A82D255B048CF9EDE01E7CB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89D5ABED8C2C3F30286A8BB269F5A7FD /* Pods-MirrorKit_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F55A283D6377A3E523FED892331C4561 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B19756C18E7113F99F3ED706F59BA852 /* MKClassBuilder.m in Sources */,
+				589192E2A9A1C173A77AAE4A66AB0742 /* MKIVar.m in Sources */,
+				75061131900E463C54BF3C43D38C2BA8 /* MKMethod.m in Sources */,
+				2195827EEE05465E3B9506D02933B7D8 /* MKMirror.m in Sources */,
+				6D5153B9D0A2C35A858A1CD36A281B76 /* MKObject.m in Sources */,
+				D39668DF3FE3ABBB76AFA58B5CAEAC8B /* MKProperty.m in Sources */,
+				4F022C09486965076BA3CC736D1D6EE0 /* MKPropertyAttributes.m in Sources */,
+				0D647AED9697B71485F6109309ABECD3 /* MKProtocol.m in Sources */,
+				F528949D8828BC89D2DADDC947C33B8D /* MKProtocolBuilder.m in Sources */,
+				C42A28461B1317917F6D406DC007568E /* MKSimpleMethod.m in Sources */,
+				0300FE8565A39A336EF9121B6F277665 /* MirrorKit-Constants.m in Sources */,
+				D3A80FC08132630B657194D76AD6B256 /* MirrorKit-dummy.m in Sources */,
+				D15A2E65323504D53C669AFFEE326BF0 /* NSDictionary+Utilities.m in Sources */,
+				023ACCBE0325BEAF1F2E35FEA125B050 /* NSObject+Reflection.m in Sources */,
+				FB11BBE32937972166720C36E2EC4403 /* NSString+Utilities.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		91C7966C4A6FF5814D4E2DC89904B575 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MirrorKit;
+			target = 82BE89F3D49F0B1AD240A2D21D36AF96 /* MirrorKit */;
+			targetProxy = 3FDC16E633F2EAABCCB254935CFEA548 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		03CA91998D6773EC5D02B3DB87B8353E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0B57334D6C23DADAA4F7D802A5760EB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		23ABA3A412DC7B338647F375DBFB4880 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C465C7FD9046BE4234C7D41A5CF7D9BA /* Pods-MirrorKit_Tests.release.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		3827EC6744AC10A6E97B93F865AF2C75 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4D88C94A2271CD82B63A74D90C07DCF /* Pods-MirrorKit_Tests.debug.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A4FD589C6AACDF0FA31CDEBFE30356A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 306117C81D7E7DB1F2D52C28EC1D87A7 /* MirrorKit-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MirrorKit/MirrorKit-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		E1F60ED60027C62AE296FC679939FC74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 306117C81D7E7DB1F2D52C28EC1D87A7 /* MirrorKit-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MirrorKit/MirrorKit-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B57334D6C23DADAA4F7D802A5760EB2 /* Debug */,
+				03CA91998D6773EC5D02B3DB87B8353E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3382A9DA8DBFEB1048672D11A8F942AF /* Build configuration list for PBXNativeTarget "MirrorKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1F60ED60027C62AE296FC679939FC74 /* Debug */,
+				A4FD589C6AACDF0FA31CDEBFE30356A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		60E9BB07BA7BEEB6C7FBAEDA9A61D159 /* Build configuration list for PBXNativeTarget "Pods-MirrorKit_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3827EC6744AC10A6E97B93F865AF2C75 /* Debug */,
+				23ABA3A412DC7B338647F375DBFB4880 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
