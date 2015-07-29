@@ -7,6 +7,15 @@
 
 Inspired by Swift's MirrorType and [MAObjcRuntime](https://github.com/mikeash/MAObjCRuntime), this framework aims to simplify working with the Objective-C runtime and offer a simple way to reflect classes and objects.
 
+## Installation
+
+MirrorKit is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod "MirrorKit"
+```
+
 # Usage
 
 ``` objc
@@ -83,17 +92,10 @@ Class myClass = [builder registerClass];
 id myAtom     = [myClass new];
 ```
 
+# To-do
 
-## Requirements
-
-## Installation
-
-MirrorKit is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod "MirrorKit"
-```
+- Finish testing
+- Add OS X demo
 
 ## Author
 
