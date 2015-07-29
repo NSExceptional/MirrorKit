@@ -59,6 +59,7 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
     }
     
     free(buffer);
+    [array removeObject:[self class]];
     return array;
 }
 
@@ -228,14 +229,14 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
     return properties;
 }
 
-- (void)replaceProperty:(MKProperty *)property {
++ (void)replaceProperty:(MKProperty *)property {
     [self replaceProperty:property.name attributes:property.attributes];
 }
 
-- (void)replaceProperty:(NSString *)name attributes:(MKPropertyAttributes *)attributes {
++ (void)replaceProperty:(NSString *)name attributes:(MKPropertyAttributes *)attributes {
     unsigned int count;
     objc_property_attribute_t *objc_attributes = [attributes copyAttributesList:&count];
-    class_replaceProperty(self.class, name.UTF8String, objc_attributes, count);
+    class_replaceProperty([self class], name.UTF8String, objc_attributes, count);
     free(objc_attributes);
 }
 

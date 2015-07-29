@@ -124,8 +124,8 @@ extern NSString * MKTypeEncodingString(const char *returnType, NSUInteger count,
  @return An array of \c MKProperty objects. */
 + (NSArray *)allProperties;
 /** Replaces the given property on the recieving class. */
-- (void)replaceProperty:(MKProperty *)property;
++ (void)replaceProperty:(MKProperty *)property;
 /** Replaces the given property on the recieving class. Useful for changing a property's attributes. */
-- (void)replaceProperty:(NSString *)name attributes:(MKPropertyAttributes *)attributes;
++ (void)replaceProperty:(NSString *)name attributes:(MKPropertyAttributes *)attributes;
 
 @end

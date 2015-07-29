@@ -26,6 +26,7 @@
                 [attributes appendFormat:@"%@%@,", MKPropertyAttributeKeyBackingIVarName, self[MKPropertyAttributeKeyBackingIVarName]];
                 break;
             case MKPropertyAttributeCopy:
+                if ([self[MKPropertyAttributeKeyCopy] boolValue])
                 [attributes appendFormat:@"%@,", MKPropertyAttributeKeyCopy];
                 break;
             case MKPropertyAttributeCustomGetter:
@@ -35,24 +36,29 @@
                 [attributes appendFormat:@"%@%@,", MKPropertyAttributeKeyCustomSetter, self[MKPropertyAttributeKeyCustomSetter]];
                 break;
             case MKPropertyAttributeDynamic:
+                if ([self[MKPropertyAttributeKeyDynamic] boolValue])
                 [attributes appendFormat:@"%@,", MKPropertyAttributeKeyDynamic];
                 break;
             case MKPropertyAttributeGarbageCollectible:
                 [attributes appendFormat:@"%@,", MKPropertyAttributeKeyGarbageCollectible];
                 break;
             case MKPropertyAttributeNonAtomic:
+                if ([self[MKPropertyAttributeKeyNonAtomic] boolValue])
                 [attributes appendFormat:@"%@,", MKPropertyAttributeKeyNonAtomic];
                 break;
             case MKPropertyAttributeOldTypeEncoding:
                 [attributes appendFormat:@"%@%@,", MKPropertyAttributeKeyOldTypeEncoding, self[MKPropertyAttributeKeyOldTypeEncoding]];
                 break;
             case MKPropertyAttributeReadOnly:
+                if ([self[MKPropertyAttributeKeyReadOnly] boolValue])
                 [attributes appendFormat:@"%@,", MKPropertyAttributeKeyReadOnly];
                 break;
             case MKPropertyAttributeRetain:
+                if ([self[MKPropertyAttributeKeyRetain] boolValue])
                 [attributes appendFormat:@"%@,", MKPropertyAttributeKeyRetain];
                 break;
             case MKPropertyAttributeWeak:
+                if ([self[MKPropertyAttributeKeyWeak] boolValue])
                 [attributes appendFormat:@"%@,", MKPropertyAttributeKeyWeak];
                 break;
             default:

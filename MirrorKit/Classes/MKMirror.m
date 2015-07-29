@@ -75,7 +75,7 @@
 }
 
 #pragma mark Misc
-- (MKMirror *)superReflection {
+- (MKMirror *)superMirror {
     return [MKMirror reflect:[self.value superclass]];
 }
 

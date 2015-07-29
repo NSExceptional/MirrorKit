@@ -13,7 +13,7 @@
 
 /** See \e MirrorKit-Constants.m for valid string tokens.
  See this link on how to construct a proper attributes string: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html */
-@interface MKPropertyAttributes : NSObject {
+@interface MKPropertyAttributes : NSObject <NSCopying, NSMutableCopying> {
     @protected
     NSUInteger _count;
     NSString *_attributesString, *_backingIVar, *_typeEncoding, *_oldTypeEncoding;

@@ -13,7 +13,26 @@
 
 #pragma mark - MKPropertyAttributes -
 
+@interface MKPropertyAttributes ()
+
+@property (nonatomic) NSString *backingIVar;
+@property (nonatomic) NSString *typeEncoding;
+@property (nonatomic) NSString *oldTypeEncoding;
+@property (nonatomic) SEL customGetter;
+@property (nonatomic) SEL customSetter;
+@property (nonatomic) BOOL isReadOnly;
+@property (nonatomic) BOOL isCopy;
+@property (nonatomic) BOOL isRetained;
+@property (nonatomic) BOOL isNonatomic;
+@property (nonatomic) BOOL isDynamic;
+@property (nonatomic) BOOL isWeak;
+@property (nonatomic) BOOL isGarbageCollectable;
+
+@end
+
 @implementation MKPropertyAttributes
+
+#pragma mark Initializers
 
 + (instancetype)attributesFromDictionary:(NSDictionary *)attributes {
     NSString *attrs = attributes.propertyAttributesString;
@@ -51,6 +70,8 @@
     
     return self;
 }
+
+#pragma mark Misc
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@ ivar=%@, readonly=%d, nonatomic=%d, getter=%@, setter=%@>",
@@ -133,6 +154,16 @@
     return propertyAttributes;
 }
 
+#pragma mark Copying
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [[MKPropertyAttributes class] attributesFromString:self.attributesString];
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    return [[MKMutablePropertyAttributes class] attributesFromString:self.attributesString];
+}
+
 @end
 
 
@@ -141,18 +172,18 @@
 
 @implementation MKMutablePropertyAttributes
 
-@synthesize backingIVar;
-@synthesize typeEncoding;
-@synthesize oldTypeEncoding;
-@synthesize customGetter;
-@synthesize customSetter;
-@synthesize isReadOnly;
-@synthesize isCopy;
-@synthesize isRetained;
-@synthesize isNonatomic;
-@synthesize isDynamic;
-@synthesize isWeak;
-@synthesize isGarbageCollectable;
+@dynamic backingIVar;
+@dynamic typeEncoding;
+@dynamic oldTypeEncoding;
+@dynamic customGetter;
+@dynamic customSetter;
+@dynamic isReadOnly;
+@dynamic isCopy;
+@dynamic isRetained;
+@dynamic isNonatomic;
+@dynamic isDynamic;
+@dynamic isWeak;
+@dynamic isGarbageCollectable;
 
 + (instancetype)attributes {
     return [self new];
@@ -164,7 +195,6 @@
 
 - (NSString *)attributesString {
     NSMutableDictionary *attrs = [NSMutableDictionary new];
-    
     if (self.typeEncoding)
         attrs[MKPropertyAttributeKeyTypeEncoding]    = self.typeEncoding;
     if (self.backingIVar)
