@@ -44,7 +44,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-Example/Pods
+Example/Pods/**/*
 Example/MirrorKit.xcworkspace
 Example/MirrorKit.xcworkspace/contents.xcworkspacedata
 
