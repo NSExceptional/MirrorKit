@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "MirrorKit"
-  s.version          = "1.0.0"
+  s.version          = "1.0.1"
   s.summary          = "A library for refleciton in Objectice-C."
   s.homepage         = "https://github.com/ThePantsThief/MirrorKit"
   s.license          = 'MIT'
@@ -10,6 +10,8 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/ThePantsThief'
 
   s.requires_arc = true
+  s.ios.deployment_target = '7.0'
+  s.osx.deployment_target = '10.8'
 
   s.source_files = 'Pod/**/*', 'Pod/*'
 end
