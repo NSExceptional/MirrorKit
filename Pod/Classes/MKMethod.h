@@ -11,6 +11,8 @@
 #import "MirrorKit-Constants.h"
 @import ObjectiveC;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MKMethod : MKSimpleMethod
 
 + (instancetype)method:(Method)method;
@@ -48,3 +50,5 @@
 - (void)getReturnValue:(void *)retPtr forMessageSend:(id)target, ...;
 
 @end
+
+NS_ASSUME_NONNULL_END

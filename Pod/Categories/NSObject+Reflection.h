@@ -10,6 +10,8 @@
 @import ObjectiveC;
 @class MKMethod, MKIVar, MKProperty, MKSimpleMethod, MKPropertyAttributes;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** Returns the type encoding string given the encoding for the return type and parameters, if any.
  @discussion Example usage for a \c void returning method which takes an \c int: @code MKTypeEncoding(@encode(void), @encode(int));
  @param returnType The encoded return type. \c void for exmaple would be \c @encode(void).
@@ -20,6 +22,7 @@ extern NSString * MKTypeEncodingString(const char *returnType, NSUInteger count,
 #pragma mark Reflection
 @interface NSObject (Reflection)
 
+/** @return An array of Class objects. */
 + (NSArray *)allSubclasses;
 
 /** Changes the class of an object instance.
@@ -39,7 +42,16 @@ extern NSString * MKTypeEncodingString(const char *returnType, NSUInteger count,
 #pragma mark Methods
 @interface NSObject (Methods)
 
+/** @return An array of \c MKMethod objects. */
 + (NSArray *)allMethods;
+
+/** Retrieves the class's instance method with the given name.
+ @return An initialized \c MKMethod object, or \c nil if the method wasn't found. */
++ (MKMethod *)methodNamed:(NSString *)name;
+
+/** Retrieves the class's class method with the given name.
+ @return An initialized \c MKMethod object, or \c nil if the method wasn't found. */
++ (MKMethod *)classMethodNamed:(NSString *)name;
 
 /** Adds a new method to the recieving class with a given name and implementation.
  @discussion This method will add an override of a superclass's implementation,
@@ -83,6 +95,10 @@ extern NSString * MKTypeEncodingString(const char *returnType, NSUInteger count,
  @return An array of \c MKIVar objects. */
 + (NSArray *)allIVars;
 
+/** Retrieves an instance variable with the corresponding name.
+ @return An initialized \c MKIVar object, or \c nil if the Ivar wasn't found. */
++ (MKIVar *)IVarNamed:(NSString *)name;
+
 /** @return The address of the given instance variable in the recieving object in memory, or \c NULL if it could not be found. */
 - (void *)getIVarAddress:(MKIVar *)ivar;
 /** @return The address of the given instance variable in the recieving object in memory, or \c NULL if it could not be found. */
@@ -123,9 +139,16 @@ extern NSString * MKTypeEncodingString(const char *returnType, NSUInteger count,
  To retrieve instance variables on a parent class, simply call \c [[self superclass] allIVars].
  @return An array of \c MKProperty objects. */
 + (NSArray *)allProperties;
+
+/** Retrieves the class's property with the given name.
+ @return An initialized \c MKProperty object, or \c nil if the property wasn't found. */
++ (MKProperty *)propertyNamed:(NSString *)name;
+
 /** Replaces the given property on the recieving class. */
 + (void)replaceProperty:(MKProperty *)property;
 /** Replaces the given property on the recieving class. Useful for changing a property's attributes. */
 + (void)replaceProperty:(NSString *)name attributes:(MKPropertyAttributes *)attributes;
 
 @end
+
+NS_ASSUME_NONNULL_END
