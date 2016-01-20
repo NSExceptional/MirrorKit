@@ -26,6 +26,10 @@
 //    [super tearDown];
 //}
 
+- (void)testMKMirror_allClasses {
+    [MKMirror allClasses];
+}
+
 - (void)testNSObjectCategories {
     XCTAssertEqual([TestRoot instanceSize], 64);
     

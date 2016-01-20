@@ -35,8 +35,14 @@
 /** All protocols of the \c Class of the \c value property as \c MKProtocol objects.*/
 @property (nonatomic, readonly) NSArray  *protocols;
 
-/** Returns a reflection of \c value.superClass. */
+/** @return A reflection of \c value.superClass. */
 @property (nonatomic, readonly) MKMirror *superMirror;
+
+/** @discussion This method is very likely to cause a crash, use at your own risk.
+ Some classes are just not save to touch at all. I did my best to hard code in some unsafe
+ classes to avoid, but Apple might add more at any time.
+ @return An array of all classes known to the runtime. */
++ (NSArray *)allClasses;
 
 @end
 

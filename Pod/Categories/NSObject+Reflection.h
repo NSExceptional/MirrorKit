@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @import ObjectiveC;
-@class MKMethod, MKIVar, MKProperty, MKSimpleMethod, MKPropertyAttributes;
+@class MKMirror, MKMethod, MKIVar, MKProperty, MKSimpleMethod, MKPropertyAttributes;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +21,9 @@ extern NSString * MKTypeEncodingString(const char *returnType, NSUInteger count,
 
 #pragma mark Reflection
 @interface NSObject (Reflection)
+
++ (MKMirror *)reflection;
+- (MKMirror *)reflection;
 
 /** @return An array of Class objects. */
 + (NSArray *)allSubclasses;

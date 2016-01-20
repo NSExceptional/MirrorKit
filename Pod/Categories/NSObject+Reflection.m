@@ -7,6 +7,7 @@
 //
 
 #import "NSObject+Reflection.h"
+#import "MKMirror.h"
 #import "MKProperty.h"
 #import "MKMethod.h"
 #import "MKIVar.h"
@@ -34,6 +35,14 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
 
 @implementation NSObject (Reflection)
 
++ (MKMirror *)reflection {
+    return [MKMirror reflect:self];
+}
+
+- (MKMirror *)reflection {
+    return [MKMirror reflect:self];
+}
+
 /** Code borrowed from MAObjCRuntime by Mike Ash. */
 + (NSArray *)allSubclasses {
     Class *buffer = NULL;
@@ -51,7 +60,7 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
         Class superclass = candidate;
         while(superclass) {
             if(superclass == self) {
-                [array addObject: candidate];
+                [array addObject:candidate];
                 break;
             }
             superclass = class_getSuperclass(superclass);
@@ -100,7 +109,7 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
     NSMutableArray *methods = [NSMutableArray array];
     for (int i = 0; i < mcount; i++)
         [methods addObject:[MKMethod method:objcmethods[i]]];
-
+    
     free(objcmethods);
     return methods;
 }

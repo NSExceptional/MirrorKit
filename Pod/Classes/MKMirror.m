@@ -79,6 +79,38 @@
     return [MKMirror reflect:[self.value superclass]];
 }
 
++ (NSArray *)allClasses {
+    unsigned int count;
+    Class *buffer = objc_copyClassList(&count);
+    
+    // Unsafe classes. Cannot add them to an array.
+    Class ignored[] = {
+        NSClassFromString(@"JSExport"),
+        NSClassFromString(@"__NSAtom"),
+        NSClassFromString(@"_NSZombie_"),
+        NSClassFromString(@"__NSMessage"),
+        NSClassFromString(@"__NSMessageBuilder") };
+    
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSInteger i = 0; i < count; i++) {
+        Class cls = buffer[i];
+        
+        BOOL ok = YES;
+        for (NSInteger x = 0; x < 5; x++)
+            if (cls == ignored[x]) {
+                ok = NO;
+                break;
+            }
+        
+        if (ok && NSClassFromString(NSStringFromClass(cls))) {
+            [result addObject:cls];
+        }
+    }
+    
+    free(buffer);
+    return [NSArray arrayWithArray:result];
+}
+
 @end
 
 
