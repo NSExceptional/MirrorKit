@@ -30,6 +30,18 @@
     return [self method:m];
 }
 
++ (instancetype)methodForSelector:(SEL)selector implementedInClass:(Class)cls {
+    if (![cls superclass]) { return [self methodForSelector:selector class:cls]; }
+    
+    BOOL unique = [[cls class] instanceMethodForSelector:selector] != [[cls superclass] instanceMethodForSelector:selector];
+    
+    if (unique) {
+        return [self methodForSelector:selector class:cls];
+    }
+    
+    return nil;
+}
+
 - (id)initWithMethod:(Method)method {
     NSParameterAssert(method);
     

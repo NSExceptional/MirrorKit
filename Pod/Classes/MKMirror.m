@@ -108,7 +108,7 @@
     }
     
     free(buffer);
-    return [NSArray arrayWithArray:result];
+    return result.copy;
 }
 
 @end
