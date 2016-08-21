@@ -16,12 +16,21 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MKMethod : MKSimpleMethod
 
 + (instancetype)method:(Method)method;
-/** Constructs an \c MKMethod for the given selector on the given class.
+
+/** Constructs an \c MKMethod for the given instance method on the given class.
  @return The newly constructed \c MKMethod object, or \c nil if \e if the specified class or its superclasses do not contain an instance method with the specified selector. */
-+ (instancetype)methodForSelector:(SEL)selector class:(Class)cls;
-/** Constructs an \c MKMethod for the given selector on the given class, only if the given
++ (instancetype)instanceMethodForSelector:(SEL)selector class:(Class)cls;
+/** Constructs an \c MKMethod for the given instance method on the given class, only if the given
  class itself defines or overrides the desired method.
  @return The newly constructed \c MKMethod object, or \c nil \e if the specified class does not define or override, or if the specified class or its superclasses do not contain, an instance method with the specified selector. */
++ (instancetype)instanceMethodForSelector:(SEL)selector implementedInClass:(Class)cls;
+
+/** Constructs an \c MKMethod for the given class method on the given class.
+ @return The newly constructed \c MKMethod object, or \c nil if \e if the specified class or its superclasses do not contain a class method with the specified selector. */
++ (instancetype)methodForSelector:(SEL)selector class:(Class)cls;
+/** Constructs an \c MKMethod for the given class method on the given class, only if the given
+ class itself defines or overrides the desired method.
+ @return The newly constructed \c MKMethod object, or \c nil \e if the specified class does not define or override, or if the specified class or its superclasses do not contain, a class method with the specified selector. */
 + (instancetype)methodForSelector:(SEL)selector implementedInClass:(Class)cls;
 
 @property (nonatomic, readonly) Method            objc_method;

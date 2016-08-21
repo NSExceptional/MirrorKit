@@ -24,8 +24,26 @@
     return [[self alloc] initWithMethod:method];
 }
 
-+ (instancetype)methodForSelector:(SEL)selector class:(Class)cls {
++ (instancetype)instanceMethodForSelector:(SEL)selector class:(Class)cls {
     Method m = class_getInstanceMethod([cls class], selector);
+    if (m == NULL) return nil;
+    return [self method:m];
+}
+
++ (instancetype)instanceMethodForSelector:(SEL)selector implementedInClass:(Class)cls {
+    if (![cls superclass]) { return [self instanceMethodForSelector:selector class:cls]; }
+    
+    BOOL unique = [[cls class] instanceMethodForSelector:selector] != [[cls superclass] instanceMethodForSelector:selector];
+    
+    if (unique) {
+        return [self instanceMethodForSelector:selector class:cls];
+    }
+    
+    return nil;
+}
+
++ (instancetype)methodForSelector:(SEL)selector class:(Class)cls {
+    Method m = class_getClassMethod([cls class], selector);
     if (m == NULL) return nil;
     return [self method:m];
 }
@@ -33,7 +51,7 @@
 + (instancetype)methodForSelector:(SEL)selector implementedInClass:(Class)cls {
     if (![cls superclass]) { return [self methodForSelector:selector class:cls]; }
     
-    BOOL unique = [[cls class] instanceMethodForSelector:selector] != [[cls superclass] instanceMethodForSelector:selector];
+    BOOL unique = [[cls class] methodForSelector:selector] != [[cls superclass] methodForSelector:selector];
     
     if (unique) {
         return [self methodForSelector:selector class:cls];

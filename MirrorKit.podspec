@@ -1,8 +1,8 @@
 
 Pod::Spec.new do |s|
   s.name             = "MirrorKit"
-  s.version          = "1.0.1"
-  s.summary          = "A library for refleciton in Objectice-C."
+  s.version          = "1.1.0"
+  s.summary          = "A library for reflection in Objectice-C."
   s.homepage         = "https://github.com/ThePantsThief/MirrorKit"
   s.license          = 'MIT'
   s.author           = { "ThePantsThief" => "tannerbennett@me.com" }
