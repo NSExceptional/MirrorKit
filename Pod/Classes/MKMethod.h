@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** The implementation of the method.
  @discussion Setting \c implementation will change the implementation of this method for the entire class which implements said method. It will also not modify the selector of said method. */
 @property (nonatomic          ) IMP               implementation;
+/** Whether the method is an instance method or not. */
+@property (nonatomic, readonly) BOOL              isInstanceMethod;
 /** The number of arguments to the method. */
 @property (nonatomic, readonly) NSUInteger        numberOfArguments;
 /** The \c NSMethodSignature object corresponding to the method's type encoding. */

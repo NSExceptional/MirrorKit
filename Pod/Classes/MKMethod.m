@@ -27,7 +27,9 @@
 + (instancetype)instanceMethodForSelector:(SEL)selector class:(Class)cls {
     Method m = class_getInstanceMethod([cls class], selector);
     if (m == NULL) return nil;
-    return [self method:m];
+    MKMethod *method = [self method:m];
+    method->_isInstanceMethod = YES;
+    return method;
 }
 
 + (instancetype)instanceMethodForSelector:(SEL)selector implementedInClass:(Class)cls {
@@ -73,6 +75,148 @@
 }
 
 - (NSString *)description {
+    return [MKMethod prettyNameForMethod:self.objc_method isClassMethod:!_isInstanceMethod];
+}
+
++ (NSString *)prettyNameForMethod:(Method)method isClassMethod:(BOOL)isClassMethod {
+    NSString *selectorName = NSStringFromSelector(method_getName(method));
+    NSString *methodTypeString = isClassMethod ? @"+" : @"-";
+    NSString *readableReturnType = ({
+        char *returnType = method_copyReturnType(method);
+        NSString *ret = [self readableTypeForEncoding:@(returnType)];
+        free(returnType);
+        ret;
+    });
+    
+    NSString *prettyName = [NSString stringWithFormat:@"%@ (%@)", methodTypeString, readableReturnType];
+    NSArray *components = [self prettyArgumentComponentsForMethod:method];
+    if (components.count) {
+        prettyName = [prettyName stringByAppendingString:[components componentsJoinedByString:@" "]];
+    } else {
+        prettyName = [prettyName stringByAppendingString:selectorName];
+    }
+    
+    return prettyName;
+}
+
++ (NSArray *)prettyArgumentComponentsForMethod:(Method)method
+{
+    NSMutableArray *components = [NSMutableArray array];
+    
+    NSString *selectorName = NSStringFromSelector(method_getName(method));
+    NSArray *selectorComponents = [selectorName componentsSeparatedByString:@":"];
+    unsigned int numberOfArguments = method_getNumberOfArguments(method);
+    
+    for (unsigned int argIndex = 2; argIndex < numberOfArguments; argIndex++) {
+        char *argType = method_copyArgumentType(method, argIndex);
+        NSString *readableArgType = [self readableTypeForEncoding:@(argType)];
+        free(argType);
+        NSString *prettyComponent = [NSString stringWithFormat:@"%@:(%@) ", [selectorComponents objectAtIndex:argIndex - 2], readableArgType];
+        [components addObject:prettyComponent];
+    }
+    
+    return components;
+}
+
++ (NSString *)readableTypeForEncoding:(NSString *)encodingString {
+    if (!encodingString) {
+        return nil;
+    }
+    
+    // See https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+    // class-dump has a much nicer and much more complete implementation for this task, but it is distributed under GPLv2 :/
+    // See https://github.com/nygard/class-dump/blob/master/Source/CDType.m
+    // Warning: this method uses multiple middle returns and macros to cut down on boilerplate.
+    // The use of macros here was inspired by https://www.mikeash.com/pyblog/friday-qa-2013-02-08-lets-build-key-value-coding.html
+    const char *encodingCString = [encodingString UTF8String];
+    
+    // Objects
+    if (encodingCString[0] == '@') {
+        NSMutableString *class = [encodingString substringFromIndex:1].mutableCopy;
+        [class replaceOccurrencesOfString:@"\"" withString:@"" options:0 range:NSMakeRange(0, class.length)];
+        if (!class.length || [class isEqual:@"?"]) {
+            [class setString:@"id"];
+        } else {
+            [class appendString:@" *"];
+        }
+        return class;
+    }
+    
+    // C Types
+#define TRANSLATE(ctype) \
+if (strcmp(encodingCString, @encode(ctype)) == 0) { \
+return (NSString *)CFSTR(#ctype); \
+}
+    
+    // Order matters here since some of the cocoa types are typedefed to c types.
+    // We can't recover the exact mapping, but we choose to prefer the cocoa types.
+    // This is not an exhaustive list, but it covers the most common types
+    TRANSLATE(CGRect);
+    TRANSLATE(CGPoint);
+    TRANSLATE(CGSize);
+    TRANSLATE(UIEdgeInsets);
+    TRANSLATE(UIOffset);
+    TRANSLATE(NSRange);
+    TRANSLATE(CGAffineTransform);
+    TRANSLATE(CATransform3D);
+    TRANSLATE(CGColorRef);
+    TRANSLATE(CGPathRef);
+    TRANSLATE(CGContextRef);
+    TRANSLATE(NSInteger);
+    TRANSLATE(NSUInteger);
+    TRANSLATE(CGFloat);
+    TRANSLATE(BOOL);
+    TRANSLATE(int);
+    TRANSLATE(short);
+    TRANSLATE(long);
+    TRANSLATE(long long);
+    TRANSLATE(unsigned char);
+    TRANSLATE(unsigned int);
+    TRANSLATE(unsigned short);
+    TRANSLATE(unsigned long);
+    TRANSLATE(unsigned long long);
+    TRANSLATE(float);
+    TRANSLATE(double);
+    TRANSLATE(long double);
+    TRANSLATE(char *);
+    TRANSLATE(Class);
+    TRANSLATE(objc_property_t);
+    TRANSLATE(Ivar);
+    TRANSLATE(Method);
+    TRANSLATE(Category);
+    TRANSLATE(NSZone *);
+    TRANSLATE(SEL);
+    TRANSLATE(void);
+    
+#undef TRANSLATE
+    
+    // Qualifier Prefixes
+    // Do this after the checks above since some of the direct translations (i.e. Method) contain a prefix.
+#define RECURSIVE_TRANSLATE(prefix, formatString) \
+if (encodingCString[0] == prefix) { \
+NSString *recursiveType = [self readableTypeForEncoding:[encodingString substringFromIndex:1]]; \
+return [NSString stringWithFormat:formatString, recursiveType]; \
+}
+    
+    // If there's a qualifier prefix on the encoding, translate it and then
+    // recursively call this method with the rest of the encoding string.
+    RECURSIVE_TRANSLATE('^', @"%@ *");
+    RECURSIVE_TRANSLATE('r', @"const %@");
+    RECURSIVE_TRANSLATE('n', @"in %@");
+    RECURSIVE_TRANSLATE('N', @"inout %@");
+    RECURSIVE_TRANSLATE('o', @"out %@");
+    RECURSIVE_TRANSLATE('O', @"bycopy %@");
+    RECURSIVE_TRANSLATE('R', @"byref %@");
+    RECURSIVE_TRANSLATE('V', @"oneway %@");
+    RECURSIVE_TRANSLATE('b', @"bitfield(%@)");
+    
+#undef RECURSIVE_TRANSLATE
+    
+    // If we couldn't translate, just return the original encoding string
+    return encodingString;
+}
+
+- (NSString *)debugDescription {
     return [NSString stringWithFormat:@"<%@ selector=%@, signature=%@>",
             NSStringFromClass(self.class), self.selectorString, self.signatureString];
 }
