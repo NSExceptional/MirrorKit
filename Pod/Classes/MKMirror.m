@@ -8,6 +8,8 @@
 
 #import "MKMirror.h"
 #import "MirrorKit.h"
+#import "NSObject+Reflection.h"
+
 
 #pragma mark - MKMirror -
 
@@ -33,18 +35,22 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ class=%@, %lu properties, %lu ivars, %lu methods, %lu protocols>",
-            NSStringFromClass(self.class), self.className, (unsigned long)self.properties.count, (unsigned long)self.instanceVariables.count, (unsigned long)self.methods.count, (unsigned long)self.protocols.count];
+    NSString *type = self.isClass ? @"metaclass" : @"class";
+    return [NSString stringWithFormat:@"<%@ %@=%@, %lu properties, %lu ivars, %lu methods, %lu protocols>",
+            NSStringFromClass(self.class), type, self.className, (unsigned long)self.properties.count, (unsigned long)self.instanceVariables.count, (unsigned long)self.methods.count, (unsigned long)self.protocols.count];
 }
 
 - (void)examine {
-    unsigned int pcount, mcount, ivcount, pccount;
-    objc_property_t *objcproperties     = class_copyPropertyList([self.value class], &pcount);
-    Protocol*__unsafe_unretained *procs = class_copyProtocolList([self.value class], &pccount);
-    Method *objcmethods                 = class_copyMethodList([self.value class], &mcount);
-    Ivar *objcivars                     = class_copyIvarList([self.value class], &ivcount);
+    Class cls = self.value == [self.value class] ? [self.value metaclass] : [self.value class];
     
-    _className = NSStringFromClass([self.value class]);
+    unsigned int pcount, mcount, ivcount, pccount;
+    objc_property_t *objcproperties     = class_copyPropertyList(cls, &pcount);
+    Protocol*__unsafe_unretained *procs = class_copyProtocolList(cls, &pccount);
+    Method *objcmethods                 = class_copyMethodList(cls, &mcount);
+    Ivar *objcivars                     = class_copyIvarList(cls, &ivcount);
+    
+    _className = NSStringFromClass(cls);
+    _isClass   = class_isMetaClass(cls);
     
     NSMutableArray *properties = [NSMutableArray array];
     for (int i = 0; i < pcount; i++)
@@ -75,6 +81,7 @@
 }
 
 #pragma mark Misc
+
 - (MKMirror *)superMirror {
     return [MKMirror reflect:[self.value superclass]];
 }
@@ -125,17 +132,17 @@
 
 - (MKProperty *)propertyNamed:(NSString *)name {
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"name", name];
-    return [self.methods filteredArrayUsingPredicate:filter].firstObject;
+    return [self.properties filteredArrayUsingPredicate:filter].firstObject;
 }
 
 - (MKIVar *)ivarNamed:(NSString *)name {
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"name", name];
-    return [self.methods filteredArrayUsingPredicate:filter].firstObject;
+    return [self.instanceVariables filteredArrayUsingPredicate:filter].firstObject;
 }
 
 - (MKProtocol *)protocolNamed:(NSString *)name {
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"%K = %@", @"name", name];
-    return [self.methods filteredArrayUsingPredicate:filter].firstObject;
+    return [self.protocols filteredArrayUsingPredicate:filter].firstObject;
 }
 
 @end

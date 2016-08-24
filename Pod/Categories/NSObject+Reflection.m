@@ -111,6 +111,14 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
         [methods addObject:[MKMethod method:objcmethods[i]]];
     
     free(objcmethods);
+    objcmethods = NULL;
+    mcount = 0;
+    
+    objcmethods = class_copyMethodList([self metaclass], &mcount);
+    for (int i = 0; i < mcount; i++)
+        [methods addObject:[MKMethod method:objcmethods[i]]];
+    
+    free(objcmethods);
     return methods;
 }
 
@@ -128,30 +136,30 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
     return [MKMethod method:m];
 }
 
-+ (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton {
-    return class_addMethod(self.class, selector, implementaiton, typeEncoding.UTF8String);
++ (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton toInstances:(BOOL)instance {
+    return class_addMethod(instance ? self.class : self.metaclass, selector, implementaiton, typeEncoding.UTF8String);
 }
 
-+ (IMP)replaceImplementationOfMethod:(MKSimpleMethod *)method with:(IMP)implementation {
-    return class_replaceMethod(self.class, method.selector, implementation, method.typeEncoding.UTF8String);
++ (IMP)replaceImplementationOfMethod:(MKSimpleMethod *)method with:(IMP)implementation useInstance:(BOOL)instance {
+    return class_replaceMethod(instance ? self.class : self.metaclass, method.selector, implementation, method.typeEncoding.UTF8String);
 }
 
-+ (void)swizzle:(MKSimpleMethod *)original with:(MKSimpleMethod *)other {
-    [self.class swizzleBySelector:original.selector with:other.selector];
++ (void)swizzle:(MKSimpleMethod *)original with:(MKSimpleMethod *)other onInstance:(BOOL)instance {
+    [self swizzleBySelector:original.selector with:other.selector onInstance:instance];
 }
 
-+ (BOOL)swizzleByName:(NSString *)original with:(NSString *)other {
++ (BOOL)swizzleByName:(NSString *)original with:(NSString *)other onInstance:(BOOL)instance {
     SEL originalMethod = NSSelectorFromString(original);
     SEL newMethod      = NSSelectorFromString(other);
     if (originalMethod == 0 || newMethod == 0)
         return NO;
     
-    [self.class swizzleBySelector:originalMethod with:newMethod];
+    [self swizzleBySelector:originalMethod with:newMethod onInstance:instance];
     return YES;
 }
 
-+ (void)swizzleBySelector:(SEL)original with:(SEL)other {
-    Class cls = [self class];
++ (void)swizzleBySelector:(SEL)original with:(SEL)other onInstance:(BOOL)instance {
+    Class cls = instance ? self.class : self.metaclass;
     Method originalMethod = class_getInstanceMethod(cls, original);
     Method newMethod = class_getInstanceMethod(cls, other);
     if (class_addMethod(cls, original, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))) {
