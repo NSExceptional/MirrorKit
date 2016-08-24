@@ -132,20 +132,41 @@ return (NSString *)CFSTR(#ctype); \
     // Order matters here since some of the cocoa types are typedefed to c types.
     // We can't recover the exact mapping, but we choose to prefer the cocoa types.
     // This is not an exhaustive list, but it covers the most common types
+#ifdef CGGEOMETRY_H_
     TRANSLATE(CGRect);
     TRANSLATE(CGPoint);
     TRANSLATE(CGSize);
+#else
+    TRANSLATE(NSRect);
+    TRANSLATE(NSPoint);
+    TRANSLATE(NSSize);
+#endif
+#ifdef CGAFFINETRANSFORM_H_
+    TRANSLATE(CGAffineTransform);
+#endif
+#ifdef CATRANSFORM_H
+    TRANSLATE(CATransform3D);
+#endif
+#ifdef CGCOLOR_H_
+    TRANSLATE(CGColorRef);
+#endif
+#ifdef CGPATH_H_
+    TRANSLATE(CGPathRef);
+#endif
+#ifdef CGCONTEXT_H_
+    TRANSLATE(CGContextRef);
+#endif
+#if __has_include(<UIKit/UIGeometry.h>)
     TRANSLATE(UIEdgeInsets);
     TRANSLATE(UIOffset);
-    TRANSLATE(NSRange);
-    TRANSLATE(CGAffineTransform);
-    TRANSLATE(CATransform3D);
-    TRANSLATE(CGColorRef);
-    TRANSLATE(CGPathRef);
-    TRANSLATE(CGContextRef);
+#else
+    TRANSLATE(NSEdgeInsets);
+#endif
     TRANSLATE(NSInteger);
     TRANSLATE(NSUInteger);
+    TRANSLATE(NSRange);
     TRANSLATE(CGFloat);
+    
     TRANSLATE(BOOL);
     TRANSLATE(int);
     TRANSLATE(short);
