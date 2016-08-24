@@ -28,7 +28,9 @@
 + (instancetype)methodForSelector:(SEL)selector class:(Class)cls instance:(BOOL)instance {
     Method m = instance ? class_getInstanceMethod([cls class], selector) : class_getClassMethod([cls class], selector);
     if (m == NULL) return nil;
-    return [self method:m];
+    MKMethod *method = [self method:m];
+    method->_isInstanceMethod = instance;
+    return method;
 }
 
 + (instancetype)methodForSelector:(SEL)selector implementedInClass:(Class)cls instance:(BOOL)instance {
