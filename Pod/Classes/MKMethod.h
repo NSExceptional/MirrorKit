@@ -44,6 +44,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// The return type of the method.
 @property (nonatomic, readonly) MKTypeEncoding    returnType;
 
+/// Like @code - (void)foo:(int)bar @endcode
+@property (nonatomic, readonly) NSString *description;
+/// Like @code -[Class foo:] @endcode
+- (NSString *)debugNameGivenClass:(Class)cls;
+
 /// Swizzles the recieving method with the given method.
 - (void)swapImplementations:(MKMethod *)method;
 

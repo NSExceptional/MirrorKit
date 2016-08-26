@@ -61,6 +61,15 @@
     return [MKMethod prettyNameForMethod:self.objc_method isClassMethod:!_isInstanceMethod];
 }
 
+- (NSString *)debugNameGivenClass:(Class)cls {
+    NSMutableString *string = [NSMutableString stringWithString:_isInstanceMethod ? @"-[" : @"+["];
+    [string appendString:NSStringFromClass(cls)];
+    [string appendString:@" "];
+    [string appendString:self.selectorString];
+    [string appendString:@"]"];
+    return string;
+}
+
 + (NSString *)prettyNameForMethod:(Method)method isClassMethod:(BOOL)isClassMethod {
     NSString *selectorName = NSStringFromSelector(method_getName(method));
     NSString *methodTypeString = isClassMethod ? @"+" : @"-";
@@ -82,8 +91,7 @@
     return prettyName;
 }
 
-+ (NSArray *)prettyArgumentComponentsForMethod:(Method)method
-{
++ (NSArray *)prettyArgumentComponentsForMethod:(Method)method {
     NSMutableArray *components = [NSMutableArray array];
     
     NSString *selectorName = NSStringFromSelector(method_getName(method));
