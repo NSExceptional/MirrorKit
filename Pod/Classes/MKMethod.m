@@ -61,9 +61,9 @@
     return [MKMethod prettyNameForMethod:self.objc_method isClassMethod:!_isInstanceMethod];
 }
 
-- (NSString *)debugNameGivenClass:(Class)cls {
+- (NSString *)debugNameGivenClassName:(NSString *)name {
     NSMutableString *string = [NSMutableString stringWithString:_isInstanceMethod ? @"-[" : @"+["];
-    [string appendString:NSStringFromClass(cls)];
+    [string appendString:name];
     [string appendString:@" "];
     [string appendString:self.selectorString];
     [string appendString:@"]"];

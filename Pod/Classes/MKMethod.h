@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Like @code - (void)foo:(int)bar @endcode
 @property (nonatomic, readonly) NSString *description;
 /// Like @code -[Class foo:] @endcode
-- (NSString *)debugNameGivenClass:(Class)cls;
+- (NSString *)debugNameGivenClassName:(NSString *)name;
 
 /// Swizzles the recieving method with the given method.
 - (void)swapImplementations:(MKMethod *)method;
