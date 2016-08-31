@@ -22,7 +22,11 @@
 #pragma mark Initializers
 
 + (instancetype)method:(Method)method {
-    return [[self alloc] initWithMethod:method];
+    return [[self alloc] initWithMethod:method isInstanceMethod:YES];
+}
+
++ (instancetype)method:(Method)method isInstanceMethod:(BOOL)isInstanceMethod {
+    return [[self alloc] initWithMethod:method isInstanceMethod:isInstanceMethod];
 }
 
 + (instancetype)methodForSelector:(SEL)selector class:(Class)cls instance:(BOOL)instance {
@@ -45,12 +49,13 @@
     return nil;
 }
 
-- (id)initWithMethod:(Method)method {
+- (id)initWithMethod:(Method)method isInstanceMethod:(BOOL)isInstanceMethod {
     NSParameterAssert(method);
     
     self = [super init];
     if (self) {
         _objc_method = method;
+        _isInstanceMethod = isInstanceMethod;
         [self examine];
     }
     

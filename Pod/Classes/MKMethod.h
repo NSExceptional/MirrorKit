@@ -15,7 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MKMethod : MKSimpleMethod
 
+/// Defaults to instance method
 + (instancetype)method:(Method)method;
++ (instancetype)method:(Method)method isInstanceMethod:(BOOL)isInstanceMethod;
 
 /// Constructs an \c MKMethod for the given method on the given class.
 ////// @return The newly constructed \c MKMethod object, or \c nil if the
