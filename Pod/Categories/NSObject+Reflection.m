@@ -108,7 +108,7 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
     
     NSMutableArray *methods = [NSMutableArray array];
     for (int i = 0; i < mcount; i++)
-        [methods addObject:[MKMethod method:objcmethods[i]]];
+        [methods addObject:[MKMethod method:objcmethods[i] isInstanceMethod:YES]];
     
     free(objcmethods);
     objcmethods = NULL;
@@ -116,7 +116,7 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
     
     objcmethods = class_copyMethodList([self metaclass], &mcount);
     for (int i = 0; i < mcount; i++)
-        [methods addObject:[MKMethod method:objcmethods[i]]];
+        [methods addObject:[MKMethod method:objcmethods[i] isInstanceMethod:NO]];
     
     free(objcmethods);
     return methods;
@@ -126,14 +126,14 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
     Method m = class_getInstanceMethod([self class], NSSelectorFromString(name));
     if (m == NULL)
         return nil;
-    return [MKMethod method:m];
+    return [MKMethod method:m isInstanceMethod:YES];
 }
 
 + (MKMethod *)classMethodNamed:(NSString *)name {
     Method m = class_getClassMethod([self class], NSSelectorFromString(name));
     if (m == NULL)
         return nil;
-    return [MKMethod method:m];
+    return [MKMethod method:m isInstanceMethod:NO];
 }
 
 + (BOOL)addMethod:(SEL)selector typeEncoding:(NSString *)typeEncoding implementation:(IMP)implementaiton toInstances:(BOOL)instance {
