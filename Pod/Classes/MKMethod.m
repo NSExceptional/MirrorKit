@@ -10,6 +10,11 @@
 #import "MKMirror.h"
 
 
+@interface MKMethod () {
+    NSString *__description;
+}
+@end
+
 @implementation MKMethod
 @dynamic implementation;
 
@@ -63,7 +68,11 @@
 }
 
 - (NSString *)description {
-    return [MKMethod prettyNameForMethod:self.objc_method isClassMethod:!_isInstanceMethod];
+    if (!__description) {
+        __description = [MKMethod prettyNameForMethod:self.objc_method isClassMethod:!_isInstanceMethod];
+    }
+    
+    return __description;
 }
 
 - (NSString *)debugNameGivenClassName:(NSString *)name {
