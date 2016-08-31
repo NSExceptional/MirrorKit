@@ -453,3 +453,12 @@ return [NSString stringWithFormat:formatString, recursiveType]; \
 }
 
 @end
+
+
+@implementation MKMethod (Comparison)
+
+- (NSComparisonResult)compare:(MKMethod *)method {
+    return [self.selectorString compare:method.selectorString];
+}
+
+@end

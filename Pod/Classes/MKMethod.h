@@ -67,4 +67,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
+@interface MKMethod (Comparison)
+
+- (NSComparisonResult)compare:(MKMethod *)method;
+
+@end
+
 NS_ASSUME_NONNULL_END
