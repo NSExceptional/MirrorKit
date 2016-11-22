@@ -13,22 +13,26 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Any of the initializers will return nil if the type encoding
+/// of the method is unsupported by `NSMethodSignature`. In general,
+/// any method whose return type or parameters involve a struct with
+/// bitfields or arrays is unsupported.
 @interface MKMethod : MKSimpleMethod
 
 /// Defaults to instance method
-+ (instancetype)method:(Method)method;
-+ (instancetype)method:(Method)method isInstanceMethod:(BOOL)isInstanceMethod;
++ (nullable instancetype)method:(Method)method;
++ (nullable instancetype)method:(Method)method isInstanceMethod:(BOOL)isInstanceMethod;
 
 /// Constructs an \c MKMethod for the given method on the given class.
 ////// @return The newly constructed \c MKMethod object, or \c nil if the
 /// specified class or its superclasses do not contain a method with the specified selector.
-+ (instancetype)methodForSelector:(SEL)selector class:(Class)cls instance:(BOOL)useInstanceMethod;
++ (nullable instancetype)methodForSelector:(SEL)selector class:(Class)cls instance:(BOOL)useInstanceMethod;
 /// Constructs an \c MKMethod for the given method on the given class, only if the given
 /// class itself defines or overrides the desired method.
 ////// @return The newly constructed \c MKMethod object, or \c nil \e if the
 /// specified class does not define or override, or if the specified class
 /// or its superclasses do not contain, a method with the specified selector.
-+ (instancetype)methodForSelector:(SEL)selector implementedInClass:(Class)cls instance:(BOOL)useInstanceMethod;
++ (nullable instancetype)methodForSelector:(SEL)selector implementedInClass:(Class)cls instance:(BOOL)useInstanceMethod;
 
 @property (nonatomic, readonly) Method            objc_method;
 /// The implementation of the method.

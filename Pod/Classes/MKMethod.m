@@ -35,11 +35,10 @@
 }
 
 + (instancetype)methodForSelector:(SEL)selector class:(Class)cls instance:(BOOL)instance {
-    Method m = instance ? class_getInstanceMethod([cls class], selector) : class_getClassMethod([cls class], selector);
+    Method m = instance ? class_getInstanceMethod(cls, selector) : class_getClassMethod(cls, selector);
     if (m == NULL) return nil;
-    MKMethod *method = [self method:m];
-    method->_isInstanceMethod = instance;
-    return method;
+    
+    return [self method:m isInstanceMethod:instance];
 }
 
 + (instancetype)methodForSelector:(SEL)selector implementedInClass:(Class)cls instance:(BOOL)instance {
@@ -61,7 +60,13 @@
     if (self) {
         _objc_method = method;
         _isInstanceMethod = isInstanceMethod;
-        [self examine];
+        @try {
+            _signatureString = @(method_getTypeEncoding(method));
+            _signature = [NSMethodSignature signatureWithObjCTypes:_signatureString.UTF8String];
+            [self examine];
+        } @catch (NSException *exception) {
+            return nil;
+        } 
     }
     
     return self;
@@ -248,14 +253,12 @@ return [NSString stringWithFormat:formatString, recursiveType]; \
 }
 
 - (void)examine {
-    _implementation    = method_getImplementation(self.objc_method);
-    _selector          = method_getName(self.objc_method);
-    _numberOfArguments = method_getNumberOfArguments(self.objc_method);
-    _selectorString    = NSStringFromSelector(self.selector);
-    _signatureString   = @(method_getTypeEncoding(self.objc_method));
-    _signature         = [NSMethodSignature signatureWithObjCTypes:self.signatureString.UTF8String];
+    _implementation    = method_getImplementation(_objc_method);
+    _selector          = method_getName(_objc_method);
+    _numberOfArguments = method_getNumberOfArguments(_objc_method);
+    _selectorString    = NSStringFromSelector(_selector);
     _typeEncoding      = [_signatureString stringByReplacingOccurrencesOfString:@"[0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, _signatureString.length)];
-    _returnType        = (MKTypeEncoding)[self.signatureString characterAtIndex:0];
+    _returnType        = (MKTypeEncoding)[_signatureString characterAtIndex:0];
 }
 
 #pragma mark Setters
@@ -431,14 +434,14 @@ return [NSString stringWithFormat:formatString, recursiveType]; \
 
 // Code borrowed from MAObjcRuntime, by Mike Ash.
 - (void)getReturnValue:(void *)retPtr forMessageSend:(id)target arguments:(va_list)args {
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:self.signature];
-    NSUInteger argumentCount = self.signature.numberOfArguments;
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:_signature];
+    NSUInteger argumentCount = _signature.numberOfArguments;
     
     invocation.target   = target;
     
-    for(NSUInteger i = 2; i < argumentCount; i++) {
+    for (NSUInteger i = 2; i < argumentCount; i++) {
         int cookie = va_arg(args, int);
-        if(cookie != MKMagicNumber) {
+        if (cookie != MKMagicNumber) {
             NSLog(@"%s: incorrect magic cookie %08x; make sure you didn\'t forget any arguments and that all arguments are wrapped in MKArg().", __func__, cookie);
             abort();
         }
@@ -447,11 +450,11 @@ return [NSString stringWithFormat:formatString, recursiveType]; \
         
         NSUInteger inSize, sigSize;
         NSGetSizeAndAlignment(typeString, &inSize, NULL);
-        NSGetSizeAndAlignment([self.signature getArgumentTypeAtIndex:i], &sigSize, NULL);
+        NSGetSizeAndAlignment([_signature getArgumentTypeAtIndex:i], &sigSize, NULL);
         
-        if(inSize != sigSize) {
+        if (inSize != sigSize) {
             NSLog(@"%s:size mismatch between passed-in argument and required argument; in type:%s (%lu) requested:%s (%lu)",
-                  __func__, typeString, (long)inSize, [self.signature getArgumentTypeAtIndex:i], (long)sigSize);
+                  __func__, typeString, (long)inSize, [_signature getArgumentTypeAtIndex:i], (long)sigSize);
             abort();
         }
         
@@ -460,9 +463,9 @@ return [NSString stringWithFormat:formatString, recursiveType]; \
     
     // Hack to make NSInvocation invoke the desired implementation
     void (*invokeWithIMP)(id, SEL, IMP) = (void *)[invocation methodForSelector:NSSelectorFromString(@"invokeUsingIMP:")];
-    invokeWithIMP(invocation, 0, self.implementation);
+    invokeWithIMP(invocation, 0, _implementation);
     
-    if(self.signature.methodReturnLength && retPtr)
+    if (_signature.methodReturnLength && retPtr)
         [invocation getReturnValue:retPtr];
 }
 

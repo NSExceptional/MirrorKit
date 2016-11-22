@@ -107,16 +107,24 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
     Method *objcmethods = class_copyMethodList([self class], &mcount);
     
     NSMutableArray *methods = [NSMutableArray array];
-    for (int i = 0; i < mcount; i++)
-        [methods addObject:[MKMethod method:objcmethods[i] isInstanceMethod:YES]];
+    for (int i = 0; i < mcount; i++) {
+        MKMethod *m = [MKMethod method:objcmethods[i] isInstanceMethod:YES];
+        if (m) {
+            [methods addObject:m];
+        }
+    }
     
     free(objcmethods);
     objcmethods = NULL;
     mcount = 0;
     
     objcmethods = class_copyMethodList([self metaclass], &mcount);
-    for (int i = 0; i < mcount; i++)
-        [methods addObject:[MKMethod method:objcmethods[i] isInstanceMethod:NO]];
+    for (int i = 0; i < mcount; i++) {
+        MKMethod *m = [MKMethod method:objcmethods[i] isInstanceMethod:NO];
+        if (m) {
+            [methods addObject:m];
+        }
+    }
     
     free(objcmethods);
     return methods;
