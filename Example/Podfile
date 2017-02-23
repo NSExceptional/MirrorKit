@@ -1,7 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 
-target 'MirrorKit_Tests', :exclusive => true do
-    link_with 'MirrorKit_Tests'
+target 'MirrorKit_Tests' do
     pod "MirrorKit", :path => "../"
 end
