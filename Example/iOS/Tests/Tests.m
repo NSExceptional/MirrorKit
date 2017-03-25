@@ -26,6 +26,10 @@
 //    [super tearDown];
 //}
 
+- (void)testLazyMethod {
+    NSLog(@"%@", [MKLazyMethod instanceMethod:@selector(pattern) class:[NSRegularExpression class]]);
+}
+
 - (void)testMKMirror_allClasses {
     [(id)[MKMirror allClasses] removeAllObjects];
 }
