@@ -1,6 +1,23 @@
-source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+generate_bridge_support!
 
+workspace 'MirrorKit'
+project 'iOS/MirrorKit-iOS.xcodeproj'
+project 'macOS/MirrorKit-macOS.xcodeproj'
 
-target 'MirrorKit_Tests' do
-    pod "MirrorKit", :path => "../"
+target :MirrorKit_iOS do
+    platform :ios, '7.0'
+    pod 'MirrorKit', :path => '../'
+    project 'iOS/MirrorKit-iOS.xcodeproj'
+
+    target 'MirrorKit_iOS_Tests' do
+        inherit! :search_paths
+    end
 end
+
+target :MirrorKit_macOS do
+    platform :osx, '10.8'
+    pod 'MirrorKit', :path => '../'
+    project 'macOS/MirrorKit-macOS.xcodeproj'
+end
+

@@ -7,7 +7,7 @@
 //
 
 @import XCTest;
-#import "MirrorKit.h"
+@import MirrorKit;
 #import "TestRoot.h"
 #import "TestChild.h"
 
@@ -27,7 +27,7 @@
 //}
 
 - (void)testMKMirror_allClasses {
-    [MKMirror allClasses];
+    [(id)[MKMirror allClasses] removeAllObjects];
 }
 
 - (void)testNSObjectCategories {
@@ -62,18 +62,21 @@
     XCTAssertEqual([originalMethods.allObjects filteredArrayUsingPredicate:filterFoo].count, 1);
     
     // Add a method
-    BOOL didAdd = [TestRoot addMethod:NSSelectorFromString(@"foobar") typeEncoding:MKTypeEncodingString(@encode(void), 0) implementation:imp_implementationWithBlock(^(id self) { NSLog(@"Called foobar"); })];
+    BOOL didAdd = [TestRoot addMethod:NSSelectorFromString(@"foobar")
+                         typeEncoding:MKTypeEncodingString(@encode(void), 0)
+                       implementation:imp_implementationWithBlock(^(id self) { NSLog(@"Called foobar"); })
+                          toInstances:YES];
     NSSet *addedMethods = [NSSet setWithArray:[TestRoot allMethods]];
     XCTAssertEqual([addedMethods.allObjects filteredArrayUsingPredicate:filterFoobar].count, 1);
     XCTAssertTrue(didAdd);
     
     // Swizzle two methods
     NSInteger numOrig = root.num, intOrig = [root integer];
-    [TestRoot swizzleByName:@"integer" with:@"num"];
+    [TestRoot swizzleByName:@"integer" with:@"num" onInstance:YES];
     XCTAssertEqual(root.num, intOrig);
     XCTAssertEqual([root integer], numOrig);
     // reset
-    [TestRoot swizzleByName:@"integer" with:@"num"];
+    [TestRoot swizzleByName:@"integer" with:@"num" onInstance:YES];
     
     ////////////////////////
     // Instance variables //
