@@ -17,15 +17,24 @@ NS_ASSUME_NONNULL_BEGIN
 /// of the method is unsupported by `NSMethodSignature`. In general,
 /// any method whose return type or parameters involve a struct with
 /// bitfields or arrays is unsupported.
-@interface MKMethod : MKSimpleMethod
+@interface MKMethod : MKSimpleMethod {
+    @protected
+    Class _targetClass;
+    Method _objc_method;
+    IMP _implementation;
+    BOOL _isInstanceMethod;
+    NSUInteger _numberOfArguments;
+    NSMethodSignature *_signature;
+    NSString *_signatureString;
+    MKTypeEncoding _returnType;
+    NSString *_fullName;
+}
 
-/// Defaults to instance method
-+ (nullable instancetype)method:(Method)method;
-+ (nullable instancetype)method:(Method)method isInstanceMethod:(BOOL)isInstanceMethod;
+#pragma mark - Initialization -
 
 /// Constructs an \c MKMethod for the given method on the given class.
-////// @return The newly constructed \c MKMethod object, or \c nil if the
-/// specified class or its superclasses do not contain a method with the specified selector.
+/// @return The newly constructed \c MKMethod object, or \c nil if the
+/// specified class and its superclasses do not contain a method with the specified selector.
 + (nullable instancetype)methodForSelector:(SEL)selector class:(Class)cls instance:(BOOL)useInstanceMethod;
 /// Constructs an \c MKMethod for the given method on the given class, only if the given
 /// class itself defines or overrides the desired method.
@@ -34,6 +43,26 @@ NS_ASSUME_NONNULL_BEGIN
 /// or its superclasses do not contain, a method with the specified selector.
 + (nullable instancetype)methodForSelector:(SEL)selector implementedInClass:(Class)cls instance:(BOOL)useInstanceMethod;
 
+#pragma mark - Convenience initializers
+
++ (nullable instancetype)instanceMethod:(SEL)selector class:(Class)cls;
++ (nullable instancetype)instanceMethod:(SEL)selector implementedInClass:(Class)cls;
++ (nullable instancetype)classMethod:(SEL)selector class:(Class)cls;
++ (nullable instancetype)classMethod:(SEL)selector implementedInClass:(Class)cls;
+
+#pragma mark - Unsafe initializers
+
+/// Defaults to instance method
++ (nullable instancetype)method:(Method)method class:(Class)cls;
++ (nullable instancetype)method:(Method)method class:(Class)cls isInstanceMethod:(BOOL)isInstanceMethod;
+
+/// Defaults to instance method
++ (nullable instancetype)method:(Method)method DEPRECATED_MSG_ATTRIBUTE("Use +method:class: instead.");
++ (nullable instancetype)method:(Method)method isInstanceMethod:(BOOL)isInstanceMethod DEPRECATED_MSG_ATTRIBUTE("Use +method:class:isInstanceMethod instead.");
+
+#pragma mark - Properties -
+/// The
+@property (nonatomic, readonly) Class             targetClass;
 @property (nonatomic, readonly) Method            objc_method;
 /// The implementation of the method.
 ////// @discussion Setting \c implementation will change the implementation of this method
@@ -53,13 +82,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// Like @code - (void)foo:(int)bar @endcode
 @property (nonatomic, readonly) NSString *description;
 /// Like @code -[Class foo:] @endcode
-- (NSString *)debugNameGivenClassName:(NSString *)name;
+@property (nonatomic, readonly) NSString *fullName;
+
+#pragma mark - Methods -
+
+/// Like @code -[Class foo:] @endcode
+- (NSString *)debugNameGivenClassName:(NSString *)name DEPRECATED_MSG_ATTRIBUTE("Use fullName instead.");
 
 /// Swizzles the recieving method with the given method.
 - (void)swapImplementations:(MKMethod *)method;
 
 #define MKMagicNumber 0xdeadbeef
-#define MKArg(expr) MKMagicNumber,/// @encode(__typeof__(expr)), (__typeof__(expr) []){ expr }
+#define MKArg(expr) MKMagicNumber @encode(__typeof__(expr)), (__typeof__(expr) []){ expr }
 
 /// Sends a message to \e target, and returns it's value, or \c nil if not applicable.
 /// @discussion You may send any message with this method. Primitive return values will be wrapped
