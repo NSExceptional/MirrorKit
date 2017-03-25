@@ -21,7 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
     @protected
     Class _targetClass;
     Method _objc_method;
-    IMP _implementation;
     BOOL _isInstanceMethod;
     NSUInteger _numberOfArguments;
     NSMethodSignature *_signature;

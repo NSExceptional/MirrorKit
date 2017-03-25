@@ -83,7 +83,7 @@
 
 - (NSString *)fullName {
     if (!_fullName) {
-        _fullName = [self debugNameGivenClassName:NSStringFromClass(cls)];
+        _fullName = [self debugNameGivenClassName:NSStringFromClass(_targetClass)];
     }
 
     return _fullName;

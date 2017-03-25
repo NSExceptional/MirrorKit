@@ -95,11 +95,11 @@
 #pragma mark Deprecated
 
 + (instancetype)method:(Method)method {
-    return [[self alloc] initWithMethod:method isInstanceMethod:YES];
+    return [[self alloc] initWithMethod:method class:nil isInstanceMethod:YES];
 }
 
 + (instancetype)method:(Method)method isInstanceMethod:(BOOL)isInstanceMethod {
-    return [[self alloc] initWithMethod:method isInstanceMethod:isInstanceMethod];
+    return [[self alloc] initWithMethod:method class:nil isInstanceMethod:isInstanceMethod];
 }
 
 #pragma mark Descriptions
