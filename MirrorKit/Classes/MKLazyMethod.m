@@ -42,7 +42,7 @@
 
 - (NSString *)selectorString {
     if (!_selectorString) {
-        _selectorString = NSStringFromSelector(_selector);
+        _selectorString = NSStringFromSelector(self.selector);
     }
 
     return _selectorString;
