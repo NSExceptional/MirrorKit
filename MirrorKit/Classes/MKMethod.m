@@ -40,7 +40,7 @@
     Method m = instance ? class_getInstanceMethod(cls, selector) : class_getClassMethod(cls, selector);
     if (m == NULL) return nil;
     
-    return [self method:m isInstanceMethod:instance];
+    return [self method:m class:cls isInstanceMethod:instance];
 }
 
 + (instancetype)methodForSelector:(SEL)selector implementedInClass:(Class)cls instance:(BOOL)instance {
