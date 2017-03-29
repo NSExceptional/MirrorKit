@@ -314,9 +314,9 @@ return [NSString stringWithFormat:formatString, recursiveType]; \
 
 - (BOOL)isImplementedInClass:(Class)cls {
     if (self.isInstanceMethod) {
-        return self.objc_method == [[cls class] instanceMethodForSelector:self.selector];
+        return self.objc_method == class_getInstanceMethod([cls class], self.selector);
     } else {
-        return self.objc_method == [[cls class] methodForSelector:self.selector];
+        return self.objc_method == class_getClassMethod([cls class], self.selector);
     }
 }
 

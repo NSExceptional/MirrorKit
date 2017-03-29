@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *_signatureString;
     MKTypeEncoding _returnType;
     NSString *_fullName;
+    BOOL _implementedByTargetClass;
 }
 
 #pragma mark - Initialization -
