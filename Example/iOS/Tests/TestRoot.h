@@ -26,10 +26,10 @@ typedef struct structure {
 - (MKStruct)structure;
 - (NSInteger)sumThis:(NSInteger)first and:(NSInteger)second;
 
-
-@property (nonatomic, readonly) NSString   *identifier;
+/// 123abc
+@property (nonatomic, readonly) NSString  *identifier;
 @property (nonatomic, readonly) NSInteger num;
-@property (nonatomic, readonly) CGRect     rect;
-@property                       CGFloat    timestamp;
+@property (nonatomic, readonly) CGRect    rect;
+@property                       CGFloat   timestamp;
 
 @end

@@ -31,6 +31,9 @@
     return "child c-string";
 }
 
+- (NSString *)identifier {
+    return [super.identifier stringByAppendingString:@"_child"];
+}
 
 #pragma mark TestChild methods
 

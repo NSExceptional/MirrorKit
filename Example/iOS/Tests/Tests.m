@@ -10,6 +10,7 @@
 @import MirrorKit;
 #import "TestRoot.h"
 #import "TestChild.h"
+#import "TestChild2.h"
 
 
 @interface Tests : XCTestCase
@@ -17,14 +18,6 @@
 @end
 
 @implementation Tests
-
-//- (void)setUp {
-//    [super setUp];
-//}
-//
-//- (void)tearDown {
-//    [super tearDown];
-//}
 
 - (void)testLazyMethod {
     NSLog(@"%@", [MKLazyMethod instanceMethod:@selector(pattern) class:[NSRegularExpression class]]);
@@ -131,6 +124,20 @@
     MKProperty *replacedNumProperty = [[TestRoot allProperties] filteredArrayUsingPredicate:findNumProperty].firstObject;
     XCTAssertNotNil(replacedNumProperty);
     XCTAssertNotEqual(numProperty.attributes.isReadOnly, replacedNumProperty.attributes.isReadOnly);
+}
+
+- (void)testAddAndRemoveMethod {
+    MKMethod *method = [TestChild methodNamed:@"identifier"];
+    IMP superIMP = method.implementation;
+    IMP imp = imp_implementationWithBlock(^(id me){
+        NSString *orig = ((NSString *(*)(id, SEL))superIMP)(me, @selector(identifier));
+        return [orig stringByAppendingString:@"_override"];
+    });
+    [TestChild2 replaceImplementationOfMethod:method with:imp useInstance:YES];
+
+    XCTAssertEqualObjects([TestChild2 new].identifier, @"123abc_child_override");
+    [TestChild2 replaceImplementationOfMethod:method with:superIMP useInstance:YES];
+    XCTAssertEqualObjects([TestChild2 new].identifier, @"123abc_child");
 }
 
 @end
