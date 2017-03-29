@@ -19,6 +19,14 @@
 
 @implementation Tests
 
+- (void)testAssumptions {
+    XCTAssertNotEqual([NSObject methodForSelector:@selector(class)],
+                      [[NSObject new] methodForSelector:@selector(class)]);
+
+    XCTAssertEqual([NSObject instanceMethodForSelector:@selector(class)],
+                   [[NSObject new] methodForSelector:@selector(class)]);
+}
+
 - (void)testLazyMethod {
     NSLog(@"%@", [MKLazyMethod instanceMethod:@selector(pattern) class:[NSRegularExpression class]]);
 }
@@ -133,10 +141,10 @@
         NSString *orig = ((NSString *(*)(id, SEL))superIMP)(me, @selector(identifier));
         return [orig stringByAppendingString:@"_override"];
     });
-    [TestChild2 replaceImplementationOfMethod:method with:imp useInstance:YES];
+    [TestChild2 replaceImplementationOfMethod:method with:imp];
 
     XCTAssertEqualObjects([TestChild2 new].identifier, @"123abc_child_override");
-    [TestChild2 replaceImplementationOfMethod:method with:superIMP useInstance:YES];
+    [TestChild2 replaceImplementationOfMethod:method with:superIMP];
     XCTAssertEqualObjects([TestChild2 new].identifier, @"123abc_child");
 }
 
