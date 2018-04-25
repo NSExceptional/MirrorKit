@@ -10,6 +10,7 @@
 #import "MirrorKit.h"
 #import "NSObject+Reflection.h"
 #import "MKPrivate.h"
+#import "MKRuntimeSafety.h"
 
 
 #pragma mark - MKMirror -
