@@ -12,24 +12,8 @@
 
 #pragma mark Initialization
 
-- (id)initWithMethod:(Method)method class:(Class)cls isInstanceMethod:(BOOL)isInstanceMethod {
-    NSParameterAssert(method);
-
-    if (self) {
-        _objc_method      = method;
-        _targetClass      = cls;
-        _isInstanceMethod = isInstanceMethod;
-        @try {
-            _implementedByTargetClass = [self isImplementedInClass:_targetClass];
-            _signatureString = @(method_getTypeEncoding(method));
-            _signature = [NSMethodSignature signatureWithObjCTypes:_signatureString.UTF8String];
-        } @catch (id exception) {
-            return nil;
-        }
-    }
-
-    return self;
-}
+/// Override to do nothing, all examined properties will be lazily initialized
+- (void)examine { }
 
 #pragma mark Lazy property overrides
 
@@ -51,7 +35,11 @@
 
 - (NSString *)typeEncoding {
     if (!_typeEncoding) {
-        _typeEncoding = [_signatureString stringByReplacingOccurrencesOfString:@"[0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, _signatureString.length)];
+        NSString *s = _signatureString;
+        _typeEncoding = [s stringByReplacingOccurrencesOfString:@"\\d"
+                                                     withString:@""
+                                                        options:NSRegularExpressionSearch
+                                                          range:NSMakeRange(0, s.length)];
     }
 
     return _typeEncoding;

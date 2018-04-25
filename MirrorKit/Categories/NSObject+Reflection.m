@@ -109,7 +109,7 @@ NSString * MKTypeEncodingString(const char *returnType, NSUInteger count, ...) {
 @implementation NSObject (Methods)
 
 + (NSArray *)allMethods {
-    [MKMirror allMethodsOf:self];
+    return [MKMirror allMethodsOf:self];
 }
 
 + (MKMethod *)methodNamed:(NSString *)name {

@@ -86,10 +86,17 @@
         _targetClass      = cls;
         _isInstanceMethod = isInstanceMethod;
         @try {
-            _implementedByTargetClass = [self isImplementedInClass:_targetClass];
             _signatureString = @(method_getTypeEncoding(method));
+
+            // 'b' -> array -> unsupported
+            if ([_signatureString containsString:@"b"]) {
+                return nil;
+            }
+
             _signature = [NSMethodSignature signatureWithObjCTypes:_signatureString.UTF8String];
             [self examine];
+
+            _implementedByTargetClass = [self isImplementedInClass:cls];
         } @catch (id exception) {
             return nil;
         } 
@@ -314,9 +321,9 @@ return [NSString stringWithFormat:formatString, recursiveType]; \
 
 - (BOOL)isImplementedInClass:(Class)cls {
     if (self.isInstanceMethod) {
-        return self.objc_method == class_getInstanceMethod([cls class], self.selector);
+        return self.objc_method == class_getInstanceMethod(cls, self.selector);
     } else {
-        return self.objc_method == class_getClassMethod([cls class], self.selector);
+        return self.objc_method == class_getClassMethod(cls, self.selector);
     }
 }
 
