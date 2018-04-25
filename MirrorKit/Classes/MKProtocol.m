@@ -8,7 +8,7 @@
 
 #import "MKProtocol.h"
 #import "MKProperty.h"
-@import ObjectiveC;
+#import <objc/runtime.h>
 
 
 @implementation MKProtocol

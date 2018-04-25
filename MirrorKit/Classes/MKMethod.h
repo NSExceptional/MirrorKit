@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MKSimpleMethod.h"
 #import "MirrorKit-Constants.h"
-@import ObjectiveC;
+#import <objc/runtime.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

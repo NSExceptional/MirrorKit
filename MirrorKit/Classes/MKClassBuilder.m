@@ -6,9 +6,12 @@
 //  Copyright (c) 2015 Tanner Bennett. All rights reserved.
 //
 
-#import "MirrorKit.h"
+#import "MKClassBuilder.h"
+#import "MKProperty.h"
+#import "MKSimpleMethod.h"
+#import "MKProtocol.h"
 #import "NSString+Utilities.h"
-@import ObjectiveC;
+#import <objc/runtime.h>
 
 
 #pragma mark - MKClassBuilder -

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class MKIVarBuilder;
+@class MKIVarBuilder, MKProperty, MKSimpleMethod, MKProtocol;
 
 
 #pragma mark - MKClassBuilder -

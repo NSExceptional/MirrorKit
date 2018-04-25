@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MirrorKit-Constants.h"
-@import ObjectiveC;
+#import <objc/runtime.h>
 @class MKPropertyAttributes, MKSimpleMethod;
 
 

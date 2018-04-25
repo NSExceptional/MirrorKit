@@ -12,7 +12,6 @@
 #import "MKLazyMethod.h"
 #import "MKIVar.h"
 #import "MKPropertyAttributes.h"
-#import "MKPrivate.h"
 #import "MKRuntimeSafety.h"
 #import "MKMirror+Reflection.h"
 

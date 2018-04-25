@@ -9,7 +9,7 @@
 #import "MKProtocolBuilder.h"
 #import "MKProtocol.h"
 #import "MKProperty.h"
-@import ObjectiveC;
+#import <objc/runtime.h>
 
 @interface MKProtocolBuilder ()
 @property (nonatomic) Protocol *workingProtocol;

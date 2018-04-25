@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <objc/runtime.h>
 @class MKMethod, MKProperty, MKIVar, MKProtocol;
-@import ObjectiveC;
 
 
 #pragma mark MKMirror

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@import ObjectiveC;
+#import <objc/runtime.h>
 @class MKMirror, MKMethod, MKIVar, MKProperty, MKSimpleMethod, MKPropertyAttributes;
 
 NS_ASSUME_NONNULL_BEGIN
