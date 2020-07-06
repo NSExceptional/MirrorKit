@@ -52,28 +52,44 @@ MKIVarBuilder *lengthIvar = [MKIVarBuilder name:@"_length" size:sizeof(NSUIntege
 // Create some methods...
 NSString *initTypes  = [NSString stringWithFormat:@"%s%s%s", @encode(id), @encode(id), @encode(SEL)];
 NSString *fooTypes   = [NSString stringWithFormat:@"%s%s%s%s", @encode(void), @encode(id), @encode(SEL), @encode(id)];
-MKSimpleMethod *init = [MKSimpleMethod buildMethodNamed:@"init" withTypes:initTypes implementation:imp_implementationWithBlock(^(id self) {
-self = [super init];
-if (self) {
-NSUInteger len = 5;
-[self setIVarByName:lengthIvar.name value:&len size:sizeof(len)];
-[self setIVarByName:nameIvar.name object:@"ThePantsThief"];
-NSLog(@"Called init");
-}
-return self;
-})];
-MKSimpleMethod *fooMethod = [MKSimpleMethod buildMethodNamed:@"foo:" withTypes:fooTypes implementation:imp_implementationWithBlock(^(id self, id someObject) {
-NSLog(@"-[%@ foo:] %lu: %@", NSStringFromClass([self class]), [self length], [self name], [someObject description]);
-})];
+MKSimpleMethod *init = [MKSimpleMethod
+    buildMethodNamed:@"init"
+    withTypes:initTypes
+    implementation:imp_implementationWithBlock(^(id self) {
+        self = [super init];
+        if (self) {
+            NSUInteger len = 5;
+            [self setIVarByName:lengthIvar.name value:&len size:sizeof(len)];
+            [self setIVarByName:nameIvar.name object:@"NSExceptional"];
+            NSLog(@"Called init");
+        }
+        return self;
+    }
+)];
+
+MKSimpleMethod *fooMethod = [MKSimpleMethod
+    buildMethodNamed:@"foo:"
+    withTypes:fooTypes
+    implementation:imp_implementationWithBlock(^(id self, id someObject) {
+        NSLog(@"-[%@ foo:] %lu: %@",
+            NSStringFromClass([self class]),
+            [self length],
+            [self name], 
+            [someObject description]
+        );
+    }
+)];
 
 // Create some property attributes, using either MKMutablePropertyAttributes or a dictionary to create an MKPropertyAttributes object
 MKMutablePropertyAttributes *nameAttributes = [MKMutablePropertyAttributes attributes];
 nameAttributes.isReadOnly  = YES;
 nameAttributes.backingIVar = nameIvar.name;
 [nameAttributes setTypeEncodingChar:MKTypeEncodingObjcObject];
-NSDictionary *lengthAttributesDict = @{MKPropertyAttributeKeyNonAtomic:       @YES,
-MKPropertyAttributeKeyTypeEncoding:    [NSString stringWithFormat:@"%c", (char)MKTypeEncodingUnsignedLongLong],
-MKPropertyAttributeKeyBackingIVarName: lengthIvar.name};
+NSDictionary *lengthAttributesDict = @{
+    MKPropertyAttributeKeyNonAtomic:       @YES,
+    MKPropertyAttributeKeyTypeEncoding:    [NSString stringWithFormat:@"%c", (char)MKTypeEncodingUnsignedLongLong],
+    MKPropertyAttributeKeyBackingIVarName: lengthIvar.name
+};
 MKPropertyAttributes *lengthAttributes = [MKPropertyAttributes attributesFromDictionary:lengthAttributesDict];
 
 // Initialize some properties with those attributes...
